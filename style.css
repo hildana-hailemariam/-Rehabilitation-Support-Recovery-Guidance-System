@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url("YOUR_IMAGE_URL_HERE");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.disclaimer {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    border-left: 6px solid #ffcc00;
+    border-radius: 8px;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+section {
+    background-color: rgba(0,0,0,0.65);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #ffcc00;
+}
+
+section p {
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #ffcc00;
+    color: #000;
+    border: none;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #e6b800;
+}
+
+.filter-controls {
+    margin-bottom: 18px;
+}
+
+.filter-controls button {
+    margin-right: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    font-size: 1rem;
+}
+
+th, td {
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: rgba(255,204,0,0.25);
+}
+
+#motivationMessage {
+    margin-top: 18px;
+    font-weight: bold;
+    color: #90ee90;
+    font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    section h2 {
+        font-size: 1.7rem;
+    }
+}
