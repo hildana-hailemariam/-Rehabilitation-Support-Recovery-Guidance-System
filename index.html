@@ -2,92 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rehabilitation Support & Recovery Guidance System</title>
+    <title>Rehabilitation Support & Personal Growth System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>Rehabilitation Support & Recovery Guidance</h1>
-        <p>A supportive system to help rebuild daily life and healthy habits</p>
+        <h1>Rehabilitation & Personal Growth Tracker</h1>
+        <p>Build healthy habits, set goals, and track your journey every day.</p>
     </header>
 
-    <section class="disclaimer">
-        <p>
-            <strong>Disclaimer:</strong> This web application is for educational and rehabilitation support purposes only. It does not replace medical treatment or professional rehabilitation services.
-        </p>
+    <section class="motivational-image">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80" alt="Push Your Limits">
+        <p class="caption">Push your limits, every day is a new chance!</p>
     </section>
 
-    <main>
-
-        <section class="daily-guidance">
-            <h2>Daily Rehabilitation Guidance</h2>
-            <p id="guidanceMessage">Welcome. The system will guide you with healthy activities throughout the day.</p>
-        </section>
-
-        <section class="medical-reminder">
-            <h2>Medical Schedule Reminder</h2>
-            <form id="medicalForm">
-                <div class="form-group">
-                    <label for="medicineName">Medicine Name</label>
-                    <input type="text" id="medicineName" placeholder="Enter medicine name">
-                </div>
-                <div class="form-group">
-                    <label for="medicineTime">Time to Take</label>
-                    <input type="time" id="medicineTime">
-                </div>
-                <button type="submit">Save Medical Reminder</button>
-            </form>
-            <p id="medicalNotice"></p>
-        </section>
-
-        <section class="task-work">
-            <h2>Task & Personal Growth Tracker</h2>
-            <p>Record your activities, reflect on what you learn, and track your growth over time. Every small step matters.</p>
-            <form id="taskForm">
-                <div class="form-group">
-                    <label for="taskName">What activity did you do?</label>
-                    <input type="text" id="taskName" placeholder="e.g. Reading, Running, Learning" required>
-                </div>
-                <div class="form-group">
-                    <label for="taskQuality">How was today?</label>
-                    <select id="taskQuality" required>
-                        <option value="">Select</option>
-                        <option value="good">Good Day</option>
-                        <option value="weak">Weak Day</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="taskReflection">What did you learn or feel from this activity?</label>
-                    <textarea id="taskReflection" rows="4" placeholder="Write your thoughts here..." required></textarea>
-                </div>
-                <button type="submit">Save Task & Reflection</button>
-            </form>
-        </section>
-
-        <section class="progress-history">
-            <h2>Your Progress & Growth</h2>
-            <p>Review your journey. See how your activities and mindset change over a week or a month. Growth takes time — and you are building it.</p>
-            <div class="filter-controls">
-                <button id="weeklyView">Weekly View</button>
-                <button id="monthlyView">Monthly View</button>
+    <section class="reflection-goals">
+        <h2>Personal Reflection & Goal Setting</h2>
+        <form id="reflectionForm">
+            <div class="form-group">
+                <label for="todayThoughts">What do you think today?</label>
+                <textarea id="todayThoughts" placeholder="Write your thoughts..." rows="3" required></textarea>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Activity</th>
-                        <th>Day Quality</th>
-                        <th>Reflection</th>
-                    </tr>
-                </thead>
-                <tbody id="taskHistoryTable"></tbody>
-            </table>
-            <p id="motivationMessage"></p>
-        </section>
+            <div class="form-group">
+                <label for="todayGoal">What is your goal for today?</label>
+                <input type="text" id="todayGoal" placeholder="Example: Run 2 km, Read a book" required>
+            </div>
+            <div class="form-group">
+                <label for="twoMonthsGoal">Where do you want to see yourself after 2 months?</label>
+                <textarea id="twoMonthsGoal" placeholder="Describe your 2-month vision..." rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="challenges">What challenges do you anticipate?</label>
+                <textarea id="challenges" placeholder="Example: Lack of motivation, fatigue..." rows="3" required></textarea>
+            </div>
+            <button type="submit">Save Reflections & Goals</button>
+        </form>
+    </section>
 
-    </main>
+    <section class="daily-guidance">
+        <h2>Daily Rehabilitation Guidance</h2>
+        <p id="guidanceMessage">Welcome. The system will guide you with healthy activities throughout the day.</p>
+    </section>
+
+    <section class="medical-reminder">
+        <h2>Medical Schedule Reminder</h2>
+        <form id="medicalForm">
+            <div class="form-group">
+                <label for="medicineName">Medicine Name</label>
+                <input type="text" id="medicineName" placeholder="Enter medicine name">
+            </div>
+            <div class="form-group">
+                <label for="medicineTime">Time to Take</label>
+                <input type="time" id="medicineTime">
+            </div>
+            <button type="submit">Save Medical Reminder</button>
+        </form>
+        <p id="medicalNotice"></p>
+    </section>
+
+    <section class="task-work">
+        <h2>Task & Personal Growth Tracker</h2>
+        <form id="taskForm">
+            <div class="form-group">
+                <label for="taskName">What activity did you do?</label>
+                <input type="text" id="taskName" placeholder="Reading, Running, Learning" required>
+            </div>
+            <div class="form-group">
+                <label for="taskQuality">How was today?</label>
+                <select id="taskQuality" required>
+                    <option value="">Select</option>
+                    <option value="good">Good Day</option>
+                    <option value="weak">Weak Day</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="taskReflection">What did you learn or feel from this activity?</label>
+                <textarea id="taskReflection" rows="4" placeholder="Write your thoughts here..." required></textarea>
+            </div>
+            <button type="submit">Save Task & Reflection</button>
+        </form>
+    </section>
+
+    <section class="progress-history">
+        <h2>Your Progress & Growth</h2>
+        <div class="filter-controls">
+            <button id="weeklyView">Weekly View</button>
+            <button id="monthlyView">Monthly View</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Activity</th>
+                    <th>Day Quality</th>
+                    <th>Reflection</th>
+                </tr>
+            </thead>
+            <tbody id="taskHistoryTable"></tbody>
+        </table>
+        <p id="motivationMessage"></p>
+    </section>
 
     <footer>
         <p>&copy; 2026 Rehabilitation Support System | Final Web Project</p>
