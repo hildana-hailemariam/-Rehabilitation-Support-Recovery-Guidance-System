@@ -2,184 +2,465 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rehabilitation Support & Personal Growth System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rehabilitation Support & Personal Growth System</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <header>
-        <h1>Rehabilitation & Personal Growth Tracker</h1>
-        <p>Build healthy habits, set goals, and track your journey every day.</p>
-    </header>
-
-    <section class="motivational-image">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80" alt="Push Your Limits">
-        <p class="caption">Push your limits, every day is a new chance!</p>
-    </section>
-
-    <section class="reflection-goals">
-        <h2>Personal Reflection & Goal Setting</h2>
-        <img class="section-image" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Keep Going">
-        <p class="section-caption">Keep going, every thought counts!</p>
-        <form id="reflectionForm">
-            <div class="form-group">
-                <label for="todayThoughts">What do you think today?</label>
-                <textarea id="todayThoughts" placeholder="Write your thoughts..." rows="3" required></textarea>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>RehabGrowth</span>
             </div>
-            <div class="form-group">
-                <label for="todayGoal">What is your goal for today?</label>
-                <input type="text" id="todayGoal" placeholder="Example: Run 2 km, Read a book" required>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About Us</a></li>
+                <li><a href="#contact" class="nav-link">Contact Us</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
-            <div class="form-group">
-                <label for="twoMonthsGoal">Where do you want to see yourself after 2 months?</label>
-                <textarea id="twoMonthsGoal" placeholder="Describe your 2-month vision..." rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="challenges">What challenges do you anticipate?</label>
-                <textarea id="challenges" placeholder="Example: Lack of motivation, fatigue..." rows="3" required></textarea>
-            </div>
-            <button type="submit">Save Reflections & Goals</button>
-        </form>
-    </section>
-
-    <section class="daily-guidance">
-        <h2>Daily Rehabilitation Guidance</h2>
-        <img class="section-image" src="https://images.unsplash.com/photo-1518611012118-f8e4b7ec3e6b?auto=format&fit=crop&w=1000&q=80" alt="Your Journey Matters">
-        <p class="section-caption">Your journey matters, follow the guidance daily.</p>
-        <p id="guidanceMessage">Welcome. The system will guide you with healthy activities throughout the day.</p>
-    </section>
-
-    <section class="medical-reminder">
-        <h2>Medical Schedule Reminder</h2>
-        <form id="medicalForm">
-            <div class="form-group">
-                <label for="medicineName">Medicine Name</label>
-                <input type="text" id="medicineName" placeholder="Enter medicine name">
-            </div>
-            <div class="form-group">
-                <label for="medicineTime">Time to Take</label>
-                <input type="time" id="medicineTime">
-            </div>
-            <button type="submit">Save Medical Reminder</button>
-        </form>
-        <p id="medicalNotice"></p>
-    </section>
-
-    <section class="task-work">
-        <h2>Task & Personal Growth Tracker</h2>
-        <img class="section-image" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="Stay Strong">
-        <p class="section-caption">Stay strong and complete your daily activities.</p>
-        <form id="taskForm">
-            <div class="form-group">
-                <label for="taskName">What activity did you do?</label>
-                <input type="text" id="taskName" placeholder="Reading, Running, Learning" required>
-            </div>
-            <div class="form-group">
-                <label for="taskQuality">How was today?</label>
-                <select id="taskQuality" required>
-                    <option value="">Select</option>
-                    <option value="good">Good Day</option>
-                    <option value="weak">Weak Day</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="taskReflection">What did you learn or feel from this activity?</label>
-                <textarea id="taskReflection" rows="4" placeholder="Write your thoughts here..." required></textarea>
-            </div>
-            <button type="submit">Save Task & Reflection</button>
-        </form>
-    </section>
-
-    <section class="progress-history">
-        <h2>Your Progress & Growth</h2>
-        <div class="filter-controls">
-            <button id="weeklyView">Weekly View</button>
-            <button id="monthlyView">Monthly View</button>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Activity</th>
-                    <th>Day Quality</th>
-                    <th>Reflection</th>
-                </tr>
-            </thead>
-            <tbody id="taskHistoryTable"></tbody>
-        </table>
-        <p id="motivationMessage"></p>
-    </section>
+    </nav>
 
-    <section class="growth-product">
-        <h2>Your Growth & Product</h2>
-        <form id="growthForm">
-            <div class="form-group">
-                <label for="timeInRehab">How long have you been in rehabilitation?</label>
-                <input type="text" id="timeInRehab" placeholder="Example: 3 weeks" required>
+    <main>
+        <section id="home" class="page-section active-section">
+            <header class="hero">
+                <h1>Rehabilitation & Personal Growth Tracker</h1>
+                <p>Build healthy habits, set goals, and track your journey every day.</p>
+            </header>
+
+            <div class="motivational-image">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80" alt="Push Your Limits">
+                <p class="caption">Push your limits, every day is a new chance!</p>
             </div>
-            <div class="form-group">
-                <label for="whyGoal">Why do you think this goal matters?</label>
-                <textarea id="whyGoal" rows="3" placeholder="Explain why this is important..." required></textarea>
+
+            <div class="content-container">
+                <section class="reflection-goals card">
+                    <h2>Personal Reflection & Goal Setting</h2>
+                    <img class="section-image" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Keep Going">
+                    <p class="section-caption">Keep going, every thought counts!</p>
+                    <form id="reflectionForm">
+                        <div class="form-group">
+                            <label for="todayThoughts">What do you think today?</label>
+                            <textarea id="todayThoughts" placeholder="Write your thoughts..." rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="todayGoal">What is your goal for today?</label>
+                            <input type="text" id="todayGoal" placeholder="Example: Run 2 km, Read a book" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="twoMonthsGoal">Where do you want to see yourself after 2 months?</label>
+                            <textarea id="twoMonthsGoal" placeholder="Describe your 2-month vision..." rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="challenges">What challenges do you anticipate?</label>
+                            <textarea id="challenges" placeholder="Example: Lack of motivation, fatigue..." rows="3" required></textarea>
+                        </div>
+                        <button type="submit">Save Reflections & Goals</button>
+                    </form>
+                </section>
+
+                <section class="daily-guidance card">
+                    <h2>Daily Rehabilitation Guidance</h2>
+                    <img class="section-image" src="https://images.unsplash.com/photo-1518611012118-f8e4b7ec3e6b?auto=format&fit=crop&w=1000&q=80" alt="Your Journey Matters">
+                    <p class="section-caption">Your journey matters, follow the guidance daily.</p>
+                    <p id="guidanceMessage">Welcome. The system will guide you with healthy activities throughout the day.</p>
+                    <div class="guidance-tips">
+                        <div class="tip">
+                            <i class="fas fa-sun"></i>
+                            <h3>Morning Routine</h3>
+                            <p>Start your day with 10 minutes of stretching and deep breathing.</p>
+                        </div>
+                        <div class="tip">
+                            <i class="fas fa-brain"></i>
+                            <h3>Mindfulness</h3>
+                            <p>Take 5-minute mindfulness breaks every 2 hours.</p>
+                        </div>
+                        <div class="tip">
+                            <i class="fas fa-walking"></i>
+                            <h3>Physical Activity</h3>
+                            <p>Aim for at least 30 minutes of moderate activity today.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="medical-reminder card">
+                    <h2>Medical Schedule Reminder</h2>
+                    <form id="medicalForm">
+                        <div class="form-group">
+                            <label for="medicineName">Medicine Name</label>
+                            <input type="text" id="medicineName" placeholder="Enter medicine name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="medicineTime">Time to Take</label>
+                            <input type="time" id="medicineTime" required>
+                        </div>
+                        <button type="submit">Save Medical Reminder</button>
+                    </form>
+                    <div class="reminders-list">
+                        <h3>Your Reminders</h3>
+                        <ul id="remindersContainer"></ul>
+                    </div>
+                    <p id="medicalNotice"></p>
+                </section>
+
+                <section class="task-work card">
+                    <h2>Task & Personal Growth Tracker</h2>
+                    <img class="section-image" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="Stay Strong">
+                    <p class="section-caption">Stay strong and complete your daily activities.</p>
+                    <form id="taskForm">
+                        <div class="form-group">
+                            <label for="taskName">What activity did you do?</label>
+                            <input type="text" id="taskName" placeholder="Reading, Running, Learning" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskQuality">How was today?</label>
+                            <select id="taskQuality" required>
+                                <option value="">Select</option>
+                                <option value="good">Good Day</option>
+                                <option value="weak">Weak Day</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskReflection">What did you learn or feel from this activity?</label>
+                            <textarea id="taskReflection" rows="4" placeholder="Write your thoughts here..." required></textarea>
+                        </div>
+                        <button type="submit">Save Task & Reflection</button>
+                    </form>
+                </section>
+
+                <section class="progress-history card">
+                    <h2>Your Progress & Growth</h2>
+                    
+                    <div class="data-tabs">
+                        <button class="tab-btn active" data-tab="tasks">Task History</button>
+                        <button class="tab-btn" data-tab="reflections">Daily Reflections</button>
+                        <button class="tab-btn" data-tab="growth">Growth Insights</button>
+                        <button class="tab-btn" data-tab="medical">Medical Reminders</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tasks-tab">
+                        <div class="filter-controls">
+                            <button id="weeklyView" class="filter-btn active">Weekly View</button>
+                            <button id="monthlyView" class="filter-btn">Monthly View</button>
+                            <button id="exportTasks" class="filter-btn">Export Data</button>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Activity</th>
+                                        <th>Day Quality</th>
+                                        <th>Reflection</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="taskHistoryTable"></tbody>
+                            </table>
+                        </div>
+                        <p id="motivationMessage"></p>
+                    </div>
+                    
+                    <div class="tab-content" id="reflections-tab">
+                        <div class="reflections-container">
+                            <h3>Your Daily Reflections & Goals</h3>
+                            <div id="reflectionsList"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="growth-tab">
+                        <div class="growth-insights-container">
+                            <h3>Your Growth Journey Insights</h3>
+                            <div class="insights-summary">
+                                <div class="insight-card">
+                                    <h4>Time in Rehabilitation</h4>
+                                    <p id="insight-time">Not recorded yet</p>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Motivation Source</h4>
+                                    <p id="insight-motivation">Not recorded yet</p>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Biggest Achievement</h4>
+                                    <p id="insight-achievement">Not recorded yet</p>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>6-Month Goal</h4>
+                                    <p id="insight-goal">Not recorded yet</p>
+                                </div>
+                            </div>
+                            <button id="viewAllGrowth" class="view-all-btn">View All Growth Data</button>
+                            <div id="fullGrowthData" class="full-data"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="medical-tab">
+                        <div class="medical-container">
+                            <h3>Your Medical Schedule</h3>
+                            <div id="medicalList"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-summary">
+                        <div class="summary-item">
+                            <i class="fas fa-tasks"></i>
+                            <div>
+                                <h4>Tasks Completed</h4>
+                                <p id="tasksCount">0</p>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <div>
+                                <h4>Days Tracked</h4>
+                                <p id="daysTracked">0</p>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <i class="fas fa-pills"></i>
+                            <div>
+                                <h4>Medical Reminders</h4>
+                                <p id="medicalCount">0</p>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Good Days</h4>
+                                <p id="goodDays">0%</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="growth-product card">
+                    <h2>Your Growth & Product</h2>
+                    <form id="growthForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="timeInRehab">How long have you been in rehabilitation?</label>
+                                <input type="text" id="timeInRehab" placeholder="Example: 3 weeks" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="whyGoal">Why do you think this goal matters?</label>
+                                <textarea id="whyGoal" rows="3" placeholder="Explain why this is important..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="motivation">What motivates you to stay sober and keep improving?</label>
+                                <textarea id="motivation" rows="3" placeholder="Your motivation..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="challengesFaced">What challenges do you face the most?</label>
+                                <textarea id="challengesFaced" rows="3" placeholder="Describe your obstacles..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="habitsToBuild">What habits do you want to build?</label>
+                                <textarea id="habitsToBuild" rows="2" placeholder="Positive habits..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="habitsToStop">What habits do you want to stop?</label>
+                                <textarea id="habitsToStop" rows="2" placeholder="Negative habits..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="feelToday">How do you feel physically and mentally today?</label>
+                                <textarea id="feelToday" rows="2" placeholder="Your current state..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="supportSystem">Who supports you in this journey?</label>
+                                <textarea id="supportSystem" rows="2" placeholder="Family, friends, mentor..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="achievementSoFar">What is your biggest achievement so far?</label>
+                                <textarea id="achievementSoFar" rows="2" placeholder="Your proud moment..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="fear">What is your biggest fear in this journey?</label>
+                                <textarea id="fear" rows="2" placeholder="Your fears..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="futureAchievement">What do you want to achieve in 2 months?</label>
+                                <textarea id="futureAchievement" rows="2" placeholder="Future goals..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="successMeasure">How will you know you're improving?</label>
+                                <textarea id="successMeasure" rows="2" placeholder="Indicators of progress..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="lessonsLearned">What lessons have you learned so far?</label>
+                                <textarea id="lessonsLearned" rows="3" placeholder="Key lessons..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="rewardSystem">How do you reward yourself after completing a task?</label>
+                                <textarea id="rewardSystem" rows="2" placeholder="Your reward system..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sixMonthsGoal">What do you want to be proud of in 6 months?</label>
+                                <textarea id="sixMonthsGoal" rows="2" placeholder="Long-term goal..." required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit">Save Growth Reflection</button>
+                    </form>
+                </section>
             </div>
-            <div class="form-group">
-                <label for="motivation">What motivates you to stay sober and keep improving?</label>
-                <textarea id="motivation" rows="3" placeholder="Your motivation..." required></textarea>
+        </section>
+
+        <section id="about" class="page-section">
+            <div class="about-container">
+                <h1>About Us</h1>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1000&q=80" alt="Our Team">
+                    </div>
+                    <div class="about-text">
+                        <h2>Our Mission</h2>
+                        <p>We are dedicated to supporting individuals on their rehabilitation journey by providing tools for personal growth, habit tracking, and progress monitoring. Our system combines evidence-based rehabilitation practices with modern technology to create a holistic support platform.</p>
+                        
+                        <h2>Our Vision</h2>
+                        <p>To create a world where every person on a rehabilitation journey has access to personalized, compassionate support that empowers them to build sustainable healthy habits and achieve their personal growth goals.</p>
+                        
+                        <h2>Our Values</h2>
+                        <div class="values">
+                            <div class="value-item">
+                                <i class="fas fa-hands-helping"></i>
+                                <h3>Compassion</h3>
+                                <p>We approach every individual with empathy and understanding.</p>
+                            </div>
+                            <div class="value-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <h3>Privacy</h3>
+                                <p>Your data is secure and confidential with us.</p>
+                            </div>
+                            <div class="value-item">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Progress</h3>
+                                <p>We focus on measurable growth and development.</p>
+                            </div>
+                        </div>
+                        
+                        <h2>Our Team</h2>
+                        <p>Our multidisciplinary team includes rehabilitation specialists, psychologists, software developers, and user experience designers who work together to create an effective support system.</p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="challengesFaced">What challenges do you face the most?</label>
-                <textarea id="challengesFaced" rows="3" placeholder="Describe your obstacles..." required></textarea>
+        </section>
+
+        <section id="contact" class="page-section">
+            <div class="contact-container">
+                <h1>Contact Us</h1>
+                <div class="contact-content">
+                    <div class="contact-form">
+                        <h2>Get in Touch</h2>
+                        <p>Have questions or need support? Send us a message and we'll respond within 24 hours.</p>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName">Full Name</label>
+                                <input type="text" id="contactName" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address</label>
+                                <input type="email" id="contactEmail" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactSubject">Subject</label>
+                                <input type="text" id="contactSubject" placeholder="Message Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">Your Message</label>
+                                <textarea id="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
+                            </div>
+                            <button type="submit">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <h2>Contact Information</h2>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Address</h3>
+                                <p>123 Wellness Street<br>Health City, HC 12345</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h3>Phone</h3>
+                                <p>+(251) 9-123-4567</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>support@rehabgrowth.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h3>Business Hours</h3>
+                                <p>Monday - Friday: 9am - 6pm<br>Saturday: 10am - 2pm</p>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <h3>Follow Us</h3>
+                            <div class="social-icons">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="habitsToBuild">What habits do you want to build?</label>
-                <textarea id="habitsToBuild" rows="2" placeholder="Positive habits..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="habitsToStop">What habits do you want to stop?</label>
-                <textarea id="habitsToStop" rows="2" placeholder="Negative habits..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="feelToday">How do you feel physically and mentally today?</label>
-                <textarea id="feelToday" rows="2" placeholder="Your current state..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="supportSystem">Who supports you in this journey?</label>
-                <textarea id="supportSystem" rows="2" placeholder="Family, friends, mentor..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="achievementSoFar">What is your biggest achievement so far?</label>
-                <textarea id="achievementSoFar" rows="2" placeholder="Your proud moment..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="fear">What is your biggest fear in this journey?</label>
-                <textarea id="fear" rows="2" placeholder="Your fears..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="futureAchievement">What do you want to achieve in 2 months?</label>
-                <textarea id="futureAchievement" rows="2" placeholder="Future goals..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="successMeasure">How will you know you’re improving?</label>
-                <textarea id="successMeasure" rows="2" placeholder="Indicators of progress..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="lessonsLearned">What lessons have you learned so far?</label>
-                <textarea id="lessonsLearned" rows="3" placeholder="Key lessons..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="rewardSystem">How do you reward yourself after completing a task?</label>
-                <textarea id="rewardSystem" rows="2" placeholder="Your reward system..." required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="sixMonthsGoal">What do you want to be proud of in 6 months?</label>
-                <textarea id="sixMonthsGoal" rows="2" placeholder="Long-term goal..." required></textarea>
-            </div>
-            <button type="submit">Save Growth Reflection</button>
-        </form>
-    </section>
+        </section>
+    </main>
 
     <footer>
-        <p>&copy; 2026 Rehabilitation Support System | Final  Web Project</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>RehabGrowth</h3>
+                <p>Supporting rehabilitation and personal growth journeys through technology and compassion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Rehabilitation Support System | Final  Web Project</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
