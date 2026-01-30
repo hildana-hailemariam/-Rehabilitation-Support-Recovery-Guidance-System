@@ -6,6 +6,7 @@
     <title>RehabGrowth | Contact Us</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -24,166 +25,258 @@
                 
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html" class="active">Contact Us</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="page-hero">
+        <section class="contact-hero">
             <div class="container">
-                <h1>Contact Us</h1>
-                <p>We're here to support you on your journey</p>
+                <div class="contact-hero-content">
+                    <h1>Contact Support</h1>
+                    <p>We're here to support you on your rehabilitation journey</p>
+                </div>
             </div>
         </section>
 
         <div class="container">
-            <div class="contact-content">
-                <section class="card contact-form">
-                    <h2>Send us a Message</h2>
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" placeholder="Your Name" required>
+            <div class="contact-main">
+                <div class="contact-grid">
+                    <div class="contact-form-section">
+                        <div class="contact-form-card">
+                            <h2>Send a Message</h2>
+                            <form id="contact-form" class="contact-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="name">Full Name</label>
+                                        <input type="text" id="name" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email Address</label>
+                                        <input type="email" id="email" placeholder="your.email@example.com" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" placeholder="+(251) 91-23-4567">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <select id="subject" required>
+                                        <option value="">Select a subject</option>
+                                        <option value="support">Technical Support</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="partnership">Partnership</option>
+                                        <option value="emergency">Emergency Support</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="message">Your Message</label>
+                                    <textarea id="message" placeholder="How can we help you?" rows="6" required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-contact">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send Message
+                                </button>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="contact-info-section">
+                        <div class="contact-details-card">
+                            <div class="contact-detail">
+                                <div class="detail-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Email Support</h4>
+                                    <p>support@rehabgrowth.com</p>
+                                    <small>Response within 24 hours</small>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-detail">
+                                <div class="detail-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Phone Support</h4>
+                                    <p>+(251) 91-23-4567</p>
+                                    <small>Available 24/7</small>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-detail">
+                                <div class="detail-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Our Location</h4>
+                                    <p>Addis Ababa, Ethiopia</p>
+                                    <small>123 Wellness Street</small>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-detail">
+                                <div class="detail-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="detail-content">
+                                    <h4>Business Hours</h4>
+                                    <p>Mon-Fri: 9am-6pm</p>
+                                    <p>Sat: 10am-2pm</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <select id="subject" required>
-                                <option value="">Select a subject</option>
-                                <option value="support">Technical Support</option>
-                                <option value="feedback">Feedback</option>
-                                <option value="partnership">Partnership</option>
-                                <option value="other">Other</option>
-                            </select>
+                        
+                        <div class="emergency-card">
+                            <div class="emergency-header">
+                                <i class="fas fa-first-aid"></i>
+                                <h3>Emergency Contact</h3>
+                            </div>
+                            <div class="emergency-content">
+                                <p>For immediate crisis support:</p>
+                                <div class="emergency-number">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <strong>National Helpline</strong>
+                                        <p>+(251) 92-73-8255</p>
+                                    </div>
+                                </div>
+                                <div class="emergency-number">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div>
+                                        <strong>Crisis Text Line</strong>
+                                        <p>Text "HELP" to 741741</p>
+                                    </div>
+                                </div>
+                                <small>Available 24/7 for urgent assistance</small>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" placeholder="How can we help you?" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                        <div id="form-message"></div>
-                    </form>
-                </section>
 
-                <section class="card contact-info">
-                    <h2>Contact Information</h2>
-                    <div class="info-items">
-                        <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h3>Our Location</h3>
-                                <p>123 Wellness Street<br>Health City, HC 12345</p>
+                        <div class="location-map">
+                            <div class="map-header">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <h3>Find Our Center</h3>
                             </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h3>Phone Number</h3>
-                                <p>+(251) 91-23-4567</p>
-                                <p class="small">Monday-Friday, 9am-6pm EST</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h3>Email Address</h3>
-                                <p>support@rehabgrowth.com</p>
-                                <p class="small">Response within 24 hours</p>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <h3>Business Hours</h3>
-                                <p>Monday - Friday: 9am - 6pm</p>
-                                <p>Saturday: 10am - 2pm</p>
-                                <p>Sunday: Closed</p>
+                            <div class="map-placeholder">
+                                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80" alt="Our Location">
+                                <div class="map-overlay">
+                                    <p><i class="fas fa-map-pin"></i> 123 Wellness Street, Addis Ababa</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="emergency-contact">
-                        <h3><i class="fas fa-exclamation-triangle"></i> Emergency Support</h3>
-                        <p>For urgent mental health support:</p>
-                        <p class="emergency-number">+(251) 92-73-8255</p>
-                        <p class="small">National Suicide Prevention Lifeline</p>
-                    </div>
-                </section>
-
-                <section class="card faq-section">
-                    <h2>Frequently Asked Questions</h2>
-                    <div class="faq">
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                Is RehabGrowth free to use?
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Yes, RehabGrowth is completely free to use. We believe that rehabilitation support should be accessible to everyone.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                How is my data protected?
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="faq-answer">
-                                <p>All your data is stored locally on your device using browser's localStorage. We never collect or store your data on our servers.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                Can I use this with my therapist?
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Absolutely! Many users share their progress reports with their healthcare providers to enhance their treatment plans.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                Is there a mobile app?
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Currently, RehabGrowth is a web application that works on all devices. You can save it to your home screen for app-like experience.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </div>
         </div>
+
+        <section class="contact-faq">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-content">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How can I start using RehabGrowth?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Visit our homepage and click "Get Started". You can begin tracking your rehabilitation journey immediately with our free tools. No registration required!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is my personal information secure?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! All your data is stored locally on your device. We don't collect or share any personal information. Your privacy is our top priority.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Can healthcare professionals use this?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Absolutely! Many therapists and doctors recommend RehabGrowth to their patients for tracking progress between sessions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What devices are supported?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>RehabGrowth works on all modern web browsers on computers, tablets, and smartphones. Save it to your home screen for app-like experience.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is there a mobile app available?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Our web app works perfectly on mobile devices. Just visit our website on your phone's browser and add it to your home screen for easy access.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How much does RehabGrowth cost?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>RehabGrowth is completely free! We believe everyone should have access to quality rehabilitation support without financial barriers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>RehabGrowth</h3>
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>RehabGrowth</span>
+                    </div>
                     <p>Supporting rehabilitation journeys through technology and compassion.</p>
                 </div>
+                
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
+                    <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-section">
-                    <h3>Contact</h3>
+                    <h4>Contact</h4>
                     <p><i class="fas fa-envelope"></i> support@rehabgrowth.com</p>
-                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-phone"></i> +(251) 91-23-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2026 Rehabilitation Support System | Final Year Project</p>
+                <p>&copy; 2026 Rehabilitation Support System</p>
             </div>
         </div>
     </footer>
