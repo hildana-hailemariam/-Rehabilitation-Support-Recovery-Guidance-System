@@ -6,8 +6,16 @@
     <title>RehabGrowth | Home</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="preloader">
+        <div class="preloader-spinner">
+            <div class="spinner"></div>
+            <p>Loading RehabGrowth</p>
+        </div>
+    </div>
+
     <header>
         <nav class="navbar">
             <div class="container">
@@ -16,17 +24,24 @@
                     <span>RehabGrowth</span>
                 </a>
                 
-                <button class="hamburger" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
+                <div class="nav-right">
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#" class="btn-nav">Get Started</a></li>
+                    </ul>
+                    
+                    <div class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    
+                    <button class="hamburger" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -34,174 +49,372 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Rehabilitation & Personal Growth Tracker</h1>
-                <p>Build healthy habits, set goals, and track your journey every day</p>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="animate-text">Your Journey to Recovery Starts Here</h1>
+                        <p class="subtitle">rehabilitation tracking and support system designed to help you achieve sustainable growth and wellness</p>
+                        <div class="hero-buttons">
+                            <a href="#features" class="btn-primary">
+                                <i class="fas fa-play-circle"></i>
+                                Start Your Journey
+                            </a>
+                            <a href="about.html" class="btn-secondary">
+                                <i class="fas fa-book-open"></i>
+                                Learn More
+                            </a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat">
+                                <h3>5,000+</h3>
+                                <p>Active Users</p>
+                            </div>
+                            <div class="stat">
+                                <h3>98%</h3>
+                                <p>Success Rate</p>
+                            </div>
+                            <div class="stat">
+                                <h3>24/7</h3>
+                                <p>Support Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80" alt="Recovery Journey" class="hero-img">
+                        <div class="floating-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure & Private</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <div class="container">
-            <div class="main-content">
-                <section class="feature-section">
-                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Motivation" class="feature-img">
-                    <p class="feature-text">Every day is a new opportunity for growth and recovery</p>
-                </section>
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Powerful Features</h2>
+                    <p>Everything you need for your rehabilitation journey</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your daily progress with detailed analytics and visual reports</p>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80" alt="Progress Tracking" class="feature-img">
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Smart Reminders</h3>
+                        <p>Never miss medications or appointments with intelligent notifications</p>
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80" alt="Smart Reminders" class="feature-img">
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Mood Analysis</h3>
+                        <p>Track emotional patterns and receive personalized insights</p>
+                        <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=400&q=80" alt="Mood Analysis" class="feature-img">
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Support</h3>
+                        <p>Connect with others on similar journeys in a safe environment</p>
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="Community Support" class="feature-img">
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="grid-layout">
-                    <section class="card">
-                        <h2><i class="fas fa-brain"></i> Daily Reflection</h2>
-                        <form id="reflection-form">
+        <section class="tools-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Rehabilitation Tools</h2>
+                    <p>Interactive tools to support your daily recovery</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="card-header">
+                            <i class="fas fa-brain"></i>
+                            <h3>Daily Reflection Journal</h3>
+                        </div>
+                        <p>Record your thoughts, feelings, and progress each day</p>
+                        <form id="reflection-form" class="tool-form">
                             <div class="form-group">
                                 <label for="thoughts">Today's Thoughts</label>
-                                <textarea id="thoughts" placeholder="How are you feeling today?" rows="3" required></textarea>
+                                <textarea id="thoughts" placeholder="How are you feeling today?" rows="4"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="goal">Today's Goal</label>
-                                <input type="text" id="goal" placeholder="What do you want to achieve?" required>
+                            <div class="mood-selector">
+                                <label>Today's Mood</label>
+                                <div class="mood-options">
+                                    <button type="button" class="mood-btn" data-mood="happy">😊</button>
+                                    <button type="button" class="mood-btn" data-mood="neutral">😐</button>
+                                    <button type="button" class="mood-btn" data-mood="sad">😔</button>
+                                    <button type="button" class="mood-btn" data-mood="anxious">😰</button>
+                                    <button type="button" class="mood-btn" data-mood="energetic">💪</button>
+                                </div>
+                                <input type="hidden" id="selected-mood" value="">
                             </div>
-                            <button type="submit" class="btn">Save Reflection</button>
+                            <button type="submit" class="btn-tool">
+                                <i class="fas fa-save"></i>
+                                Save Reflection
+                            </button>
                         </form>
-                    </section>
-
-                    <section class="card">
-                        <h2><i class="fas fa-tasks"></i> Activity Tracker</h2>
-                        <form id="activity-form">
-                            <div class="form-group">
-                                <label for="activity">Activity Name</label>
-                                <input type="text" id="activity" placeholder="Exercise, Reading, Meditation..." required>
+                        
+                        <div class="reflection-history">
+                            <div class="history-header">
+                                <i class="fas fa-history"></i>
+                                <h4>Your Reflection History</h4>
+                                <button class="clear-history" id="clear-reflection-history">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </div>
+                            <div class="history-list" id="reflection-history">
+                                <div class="empty-history">
+                                    <i class="fas fa-book-open"></i>
+                                    <p>No reflections yet. Start by saving your first reflection above!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="card-header">
+                            <i class="fas fa-running"></i>
+                            <h3>Activity Tracker</h3>
+                        </div>
+                        <p>Log your physical activities and exercises</p>
+                        <form id="activity-form" class="tool-form">
                             <div class="form-group">
-                                <label for="quality">Day Quality</label>
-                                <select id="quality" required>
-                                    <option value="">Select</option>
-                                    <option value="good">Good Day</option>
-                                    <option value="average">Average Day</option>
-                                    <option value="challenging">Challenging Day</option>
+                                <label for="activity-type">Activity Type</label>
+                                <select id="activity-type">
+                                    <option value="">Select activity</option>
+                                    <option value="walking">Walking</option>
+                                    <option value="stretching">Stretching</option>
+                                    <option value="yoga">Yoga</option>
+                                    <option value="therapy">Therapy Exercises</option>
+                                    <option value="meditation">Meditation</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="reflection">Reflection</label>
-                                <textarea id="reflection" placeholder="What did you learn?" rows="3" required></textarea>
+                                <label for="duration">Duration (minutes)</label>
+                                <input type="number" id="duration" placeholder="30" min="1" max="240">
                             </div>
-                            <button type="submit" class="btn">Save Activity</button>
+                            <div class="form-group">
+                                <label for="activity-notes">Notes</label>
+                                <textarea id="activity-notes" placeholder="How did it feel?" rows="2"></textarea>
+                            </div>
+                            <button type="submit" class="btn-tool">
+                                <i class="fas fa-plus"></i>
+                                Log Activity
+                            </button>
                         </form>
-                    </section>
-
-                    <section class="card">
-                        <h2><i class="fas fa-pills"></i> Medical Reminders</h2>
-                        <form id="medical-form">
+                        <div class="progress-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <div>
+                                    <strong id="total-activities">0</strong>
+                                    <small>Activities Logged</small>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-fire"></i>
+                                <div>
+                                    <strong id="days-tracked">0</strong>
+                                    <small>Days Tracked</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-history">
+                            <h4>Recent Activities</h4>
+                            <ul id="activity-history-list"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="card-header">
+                            <i class="fas fa-pills"></i>
+                            <h3>Medication Reminders</h3>
+                        </div>
+                        <p>Set reminders for your medications and treatments</p>
+                        <form id="medical-form" class="tool-form">
                             <div class="form-group">
                                 <label for="medicine">Medicine Name</label>
-                                <input type="text" id="medicine" placeholder="Enter medicine name" required>
+                                <input type="text" id="medicine" placeholder="Enter medicine name">
                             </div>
                             <div class="form-group">
-                                <label for="time">Time to Take</label>
-                                <input type="time" id="time" required>
+                                <label for="medicine-time">Time to Take</label>
+                                <input type="time" id="medicine-time">
                             </div>
-                            <button type="submit" class="btn">Add Reminder</button>
+                            <button type="submit" class="btn-tool">
+                                <i class="fas fa-bell"></i>
+                                Set Reminder
+                            </button>
                         </form>
-                        <div class="reminders">
-                            <h3>Current Reminders</h3>
-                            <ul id="reminders-list"></ul>
+                        <div class="reminders-list">
+                            <h4>Today's Reminders</h4>
+                            <ul id="reminders-container"></ul>
                         </div>
-                    </section>
-
-                    <section class="card">
-                        <h2><i class="fas fa-chart-line"></i> Progress Dashboard</h2>
-                        <div class="stats">
-                            <div class="stat-box">
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <h3 id="total-activities">0</h3>
-                                    <p>Activities</p>
-                                </div>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-calendar"></i>
-                                <div>
-                                    <h3 id="days-tracked">0</h3>
-                                    <p>Days Tracked</p>
-                                </div>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-clock"></i>
-                                <div>
-                                    <h3 id="total-reminders">0</h3>
-                                    <p>Reminders</p>
-                                </div>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-smile"></i>
-                                <div>
-                                    <h3 id="good-days">0%</h3>
-                                    <p>Good Days</p>
-                                </div>
-                            </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="card-header">
+                            <i class="fas fa-bullseye"></i>
+                            <h3>Goal Setting</h3>
                         </div>
-
-                        <div class="tabs">
-                            <div class="tab-buttons">
-                                <button class="tab-btn active" data-tab="activities">Activities</button>
-                                <button class="tab-btn" data-tab="reflections">Reflections</button>
-                            </div>
-                            <div class="tab-content active" id="activities-tab">
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Activity</th>
-                                                <th>Quality</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="activities-table"></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="tab-content" id="reflections-tab">
-                                <div id="reflections-list">
-                                    <p class="empty">No reflections yet</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="card">
-                        <h2><i class="fas fa-seedling"></i> Growth Goals</h2>
-                        <form id="goals-form">
+                        <p>Set and track your rehabilitation goals</p>
+                        <form id="goals-form" class="tool-form">
                             <div class="form-group">
-                                <label for="short-goal">Short-term Goal (2 months)</label>
-                                <textarea id="short-goal" placeholder="What do you want to achieve in 2 months?" rows="2" required></textarea>
+                                <label for="short-goal">Short-term Goal (This Week)</label>
+                                <input type="text" id="short-goal" placeholder="e.g., Walk 30 minutes daily">
                             </div>
                             <div class="form-group">
-                                <label for="long-goal">Long-term Goal (6 months)</label>
-                                <textarea id="long-goal" placeholder="Where do you see yourself in 6 months?" rows="2" required></textarea>
+                                <label for="long-goal">Long-term Goal (This Month)</label>
+                                <input type="text" id="long-goal" placeholder="e.g., Reduce pain by 50%">
                             </div>
-                            <div class="form-group">
-                                <label for="motivation">Motivation</label>
-                                <textarea id="motivation" placeholder="What keeps you going?" rows="2" required></textarea>
-                            </div>
-                            <button type="submit" class="btn">Save Goals</button>
+                            <button type="submit" class="btn-tool">
+                                <i class="fas fa-target"></i>
+                                Set Goals
+                            </button>
                         </form>
-                    </section>
-
-                    <section class="card">
-                        <h2><i class="fas fa-lightbulb"></i> Daily Tips</h2>
-                        <div class="tips">
-                            <p id="daily-tip">Start your day with positive affirmations and set realistic goals for the day.</p>
-                            <button id="new-tip" class="btn">New Tip</button>
+                        <div class="progress-chart">
+                            <h4>Weekly Progress</h4>
+                            <div class="chart-bar">
+                                <div class="chart-fill" id="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <small id="progress-text">0% of weekly goal completed</small>
                         </div>
-                    </section>
+                        <div class="goals-history">
+                            <h4>Your Goals</h4>
+                            <ul id="goals-list"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="inspiration-section">
+            <div class="container">
+                <div class="inspiration-content">
+                    <div class="inspiration-text">
+                        <h2>"Recovery is not a race. You don't have to feel guilty if it takes you longer than you thought it would."</h2>
+                        <p class="author">– Unknown</p>
+                    </div>
+                    <div class="inspiration-image">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80" alt="Inspirational">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tips-section">
+            <div class="container">
+                <div class="tips-card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Daily Wellness Tip</h3>
+                    </div>
+                    <div class="tip-content">
+                        <p id="daily-tip-text">Start your day with 5 minutes of deep breathing to reduce stress and increase focus.</p>
+                        <div class="tip-author">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=100&q=80" alt="Dr. Sarah">
+                            <div>
+                                <strong>Dr. Sarah Johnson</strong>
+                                <small>Rehabilitation Specialist</small>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="new-tip-btn" class="btn-tip">
+                        <i class="fas fa-redo"></i>
+                        Get New Tip
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-home">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Success Stories</h2>
+                    <p>Real people, real recovery journeys</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-img">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Alex">
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"RehabGrowth gave me the structure I needed for my recovery. The progress tracking kept me motivated."</p>
+                            <div class="author-info">
+                                <h4>Alex Morgan</h4>
+                                <small>6 months in recovery</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-img">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b786d4d9?auto=format&fit=crop&w=400&q=80" alt="Sarah">
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p>"The medication reminders are a lifesaver. I haven't missed a single dose since using this platform."</p>
+                            <div class="author-info">
+                                <h4>Sarah Chen</h4>
+                                <small>Chronic pain management</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-text">
+                        <h2>Ready to Start Your Recovery Journey?</h2>
+                        <p>Join thousands who have found hope and progress with RehabGrowth</p>
+                    </div>
+                    <div class="cta-image">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=600&q=80" alt="Get Started">
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn-cta">Start Free Trial</a>
+                        <a href="contact.html" class="btn-cta-secondary">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>RehabGrowth</h3>
-                    <p>Supporting rehabilitation journeys through technology and compassion.</p>
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>RehabGrowth</span>
+                    </div>
+                    <p>rehabilitation support for sustainable growth and wellness.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
@@ -209,19 +422,46 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Testimonials</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p><i class="fas fa-envelope"></i> support@rehabgrowth.com</p>
-                    <p><i class="fas fa-phone"></i> +(251) 91-23-4567</p>
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> support@rehabgrowth.com</p>
+                        <p><i class="fas fa-phone"></i> +(251) 91-23-4567</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Rehabilitation Support System | Final Project</p>
+                <p>&copy; 2026 RehabGrowth | Rehabilitation Support System</p>
+                <div class="footer-extra">
+                    <span>Made with <i class="fas fa-heart"></i> for better rehabilitation</span>
+                </div>
             </div>
         </div>
     </footer>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="chat-btn">
+            <i class="fas fa-comment"></i>
+        </button>
+        <button class="floating-btn" id="scroll-top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
 
     <script src="script.js"></script>
 </body>
