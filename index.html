@@ -15,7 +15,6 @@
             <p>Loading RehabGrowth</p>
         </div>
     </div>
-
     <header>
         <nav class="navbar">
             <div class="container">
@@ -325,8 +324,8 @@
                         <div class="tip-author">
                             <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=100&q=80" alt="Dr. Sarah">
                             <div>
-                                <strong>Dr. Sarah Johnson</strong>
-                                <small>Rehabilitation Specialist</small>
+                                <strong id="tip-author-name">Dr. Sarah Johnson</strong>
+                                <small id="tip-author-role">Rehabilitation Specialist</small>
                             </div>
                         </div>
                     </div>
@@ -337,7 +336,7 @@
                 </div>
             </div>
         </section>
-
+        
         <section class="testimonials-home">
             <div class="container">
                 <div class="section-header">
@@ -455,12 +454,22 @@
     </footer>
 
     <div class="floating-buttons">
-        <button class="floating-btn" id="chat-btn">
-            <i class="fas fa-comment"></i>
-        </button>
         <button class="floating-btn" id="scroll-top">
             <i class="fas fa-arrow-up"></i>
         </button>
+    </div>
+    
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <div class="notification-text">
+                <strong>Success!</strong>
+                <p id="notification-message">Your reflection has been saved successfully!</p>
+            </div>
+            <button class="notification-close" id="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     </div>
 
     <script src="script.js"></script>
