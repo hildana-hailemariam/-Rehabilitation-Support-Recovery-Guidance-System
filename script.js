@@ -1,27 +1,74 @@
-// Wait for page to fully load
-window.addEventListener('load', function() {
-    const preloader = document.querySelector('.preloader');
-    if (preloader) {
-        setTimeout(() => {
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-        }, 1000);
-    }
+document.addEventListener('DOMContentLoaded', function() {
     
-    // Initialize all functions
-    initNavigation();
-    initForms();
-    initFAQs();
-    initTestimonialSlider();
-    initReflectionHistory();
-    initDailyTips();
-    initThemeToggle();
-    initScrollToTop();
-    initChatButton();
+    initializeTheme();
+    initializePreloader();
+    initializeNavigation();
+    initializeAllForms();
+    initializeReflections();
+    initializeActivities();
+    initializeReminders();
+    initializeGoals();
+    initializeTips();
+    initializeTestimonialSlider();
+    initializeFAQs();
+    initializeScrollToTop();
+    initializeNotifications();
+    
+    console.log('RehabGrowth initialized successfully!');
 });
 
-// Initialize navigation menu
-function initNavigation() {
+function initializeTheme() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle?.querySelector('i');
+    
+    if (!themeToggle || !themeIcon) return;
+    
+    const savedTheme = localStorage.getItem('rehabGrowthTheme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    updateThemeIcon(savedTheme);
+    
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('rehabGrowthTheme', newTheme);
+        
+        updateThemeIcon(newTheme);
+        
+        showNotification(`Switched to ${newTheme} mode`, 'success');
+    });
+    
+    function updateThemeIcon(theme) {
+        const themeIcon = document.querySelector('.theme-toggle i');
+        if (!themeIcon) return;
+        
+        if (theme === 'dark') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    }
+}
+function initializePreloader() {
+    const preloader = document.querySelector('.preloader');
+    if (preloader) {
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 800);
+        });
+    }
+}
+function initializeNavigation() {
+    
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     
@@ -31,7 +78,6 @@ function initNavigation() {
             navMenu.classList.toggle('active');
         });
         
-        // Close menu when clicking links
         document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -39,1119 +85,257 @@ function initNavigation() {
             });
         });
     }
-    
-    // Sticky navbar on scroll
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         if (navbar) {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         }
     });
-}
-
-// Initialize all forms
-function initForms() {
-    // Reflection Form
-    const reflectionForm = document.getElementById('reflection-form');
-    if (reflectionForm) {
-        let selectedMood = null;
-        const moodButtons = document.querySelectorAll('.mood-btn');
-        
-        // Mood selection
-        moodButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                moodButtons.forEach(btn => btn.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedMood = this.dataset.mood;
-            });
-        });
-        
-        // Form submission
-        reflectionForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const thoughts = document.getElementById('thoughts').value.trim();
-            
-            if (!thoughts) {
-                showNotification('Please enter your thoughts');
-                return;
-            }
-            
-            if (!selectedMood) {
-                showNotification('Please select your mood');
-                return;
-            }
-            
-            // Create reflection object
-            const reflection = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString('en-US', { 
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }),
-                thoughts: thoughts,
-                mood: selectedMood
-            };
-            
-            // Save to localStorage
-            let reflections = JSON.parse(localStorage.getItem('reflections') || '[]');
-            reflections.unshift(reflection);
-            localStorage.setItem('reflections', JSON.stringify(reflections));
-            
-            // Reset form and update display
-            showNotification('Reflection saved successfully!');
-            reflectionForm.reset();
-            moodButtons.forEach(btn => btn.classList.remove('selected'));
-            selectedMood = null;
-            
-            updateReflectionHistory();
-        });
-    }
-    
-    // Activity Form
-    const activityForm = document.getElementById('activity-form');
-    if (activityForm) {
-        activityForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const type = document.getElementById('activity-type').value;
-            const duration = document.getElementById('duration').value;
-            const notes = document.getElementById('activity-notes').value;
-            
-            if (!type) {
-                showNotification('Please select an activity type');
-                return;
-            }
-            
-            const activity = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString(),
-                type: type,
-                duration: parseInt(duration) || 0,
-                notes: notes
-            };
-            
-            let activities = JSON.parse(localStorage.getItem('activities') || '[]');
-            activities.unshift(activity);
-            localStorage.setItem('activities', JSON.stringify(activities));
-            
-            showNotification('Activity logged successfully!');
-            activityForm.reset();
-            updateStats();
-        });
-    }
-    
-    // Medication Form
-    const medicalForm = document.getElementById('medical-form');
-    if (medicalForm) {
-        medicalForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const medicine = document.getElementById('medicine').value.trim();
-            const time = document.getElementById('medicine-time').value;
-            
-            if (!medicine || !time) {
-                showNotification('Please fill in all fields');
-                return;
-            }
-            
-            const reminder = {
-                id: Date.now(),
-                medicine: medicine,
-                time: time,
-                date: new Date().toLocaleDateString()
-            };
-            
-            let reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-            reminders.unshift(reminder);
-            localStorage.setItem('reminders', JSON.stringify(reminders));
-            
-            showNotification('Reminder added successfully!');
-            medicalForm.reset();
-            displayReminders();
-            updateStats();
-        });
-    }
-    
-    // Goals Form
-    const goalsForm = document.getElementById('goals-form');
-    if (goalsForm) {
-        // Load saved goals
-        const savedGoals = JSON.parse(localStorage.getItem('goals') || '{}');
-        if (savedGoals.short) {
-            document.getElementById('short-goal').value = savedGoals.short;
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
         }
-        if (savedGoals.long) {
-            document.getElementById('long-goal').value = savedGoals.long;
-        }
-        
-        goalsForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const shortGoal = document.getElementById('short-goal').value;
-            const longGoal = document.getElementById('long-goal').value;
-            
-            const goals = {
-                short: shortGoal,
-                long: longGoal,
-                updated: new Date().toLocaleDateString()
-            };
-            
-            localStorage.setItem('goals', JSON.stringify(goals));
-            showNotification('Goals updated successfully!');
-        });
-    }
+    });
     
-    // Contact Form
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
             
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value.trim();
-            
-            if (!name || !email || !subject || !message) {
-                showNotification('Please fill in all required fields');
-                return;
-            }
-            
-            showNotification('Message sent successfully! We will get back to you within 24 hours.');
-            contactForm.reset();
-        });
-    }
-    
-    // Success Story Form
-    const successStoryForm = document.getElementById('success-story-form');
-    if (successStoryForm) {
-        const ratingStars = document.querySelectorAll('.stars i');
-        const ratingInput = document.getElementById('story-rating');
-        const storySuccess = document.getElementById('story-success');
-        
-        if (ratingStars.length > 0 && ratingInput) {
-            ratingStars.forEach(star => {
-                star.addEventListener('click', function() {
-                    const rating = this.dataset.rating;
-                    ratingInput.value = rating;
-                    
-                    ratingStars.forEach(s => {
-                        if (s.dataset.rating <= rating) {
-                            s.classList.remove('far');
-                            s.classList.add('fas');
-                            s.classList.add('active');
-                        } else {
-                            s.classList.remove('fas');
-                            s.classList.add('far');
-                            s.classList.remove('active');
-                        }
-                    });
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
                 });
-            });
-        }
-        
-        successStoryForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (ratingInput && ratingInput.value === '0') {
-                showNotification('Please rate your experience');
-                return;
-            }
-            
-            successStoryForm.style.display = 'none';
-            if (storySuccess) {
-                storySuccess.style.display = 'block';
-            }
-            showNotification('Thank you for sharing your success story!');
-        });
-    }
-}
-
-// Initialize FAQ functionality
-function initFAQs() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', function() {
-            const answer = this.nextElementSibling;
-            const isActive = this.classList.contains('active');
-            
-            // Close all other FAQs
-            faqQuestions.forEach(q => {
-                q.classList.remove('active');
-                q.nextElementSibling.classList.remove('active');
-            });
-            
-            // Toggle current FAQ
-            if (!isActive) {
-                this.classList.add('active');
-                answer.classList.add('active');
             }
         });
     });
-}
-
-// Initialize testimonial slider
-function initTestimonialSlider() {
-    const testimonialsSlider = document.querySelector('.testimonials-slider');
-    if (!testimonialsSlider) return;
     
-    const testimonialCards = document.querySelectorAll('.testimonial-card');
-    const sliderPrev = document.querySelector('.slider-prev');
-    const sliderNext = document.querySelector('.slider-next');
-    const sliderDots = document.querySelectorAll('.dot');
-    
-    if (testimonialCards.length === 0) return;
-    
-    let currentSlide = 0;
-    
-    function showSlide(index) {
-        testimonialCards.forEach((card, i) => {
-            card.classList.toggle('active', i === index);
-        });
-        
-        sliderDots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-        
-        currentSlide = index;
-    }
-    
-    if (sliderPrev) {
-        sliderPrev.addEventListener('click', function() {
-            let newIndex = currentSlide - 1;
-            if (newIndex < 0) newIndex = testimonialCards.length - 1;
-            showSlide(newIndex);
-        });
-    }
-    
-    if (sliderNext) {
-        sliderNext.addEventListener('click', function() {
-            let newIndex = currentSlide + 1;
-            if (newIndex >= testimonialCards.length) newIndex = 0;
-            showSlide(newIndex);
-        });
-    }
-    
-    if (sliderDots.length > 0) {
-        sliderDots.forEach((dot, index) => {
-            dot.addEventListener('click', function() {
-                showSlide(index);
-            });
-        });
-    }
-    
-    // Auto slide every 5 seconds
-    setInterval(() => {
-        let newIndex = currentSlide + 1;
-        if (newIndex >= testimonialCards.length) newIndex = 0;
-        showSlide(newIndex);
-    }, 5000);
-}
-
-// Initialize reflection history
-function initReflectionHistory() {
-    // Load and display reflections on page load
-    updateReflectionHistory();
-    displayReminders();
-    updateStats();
-    
-    // Clear history button
-    const clearHistoryBtn = document.getElementById('clear-history');
-    if (clearHistoryBtn) {
-        clearHistoryBtn.addEventListener('click', function() {
-            if (confirm('Are you sure you want to clear all your reflection history? This cannot be undone.')) {
-                localStorage.removeItem('reflections');
-                updateReflectionHistory();
-                showNotification('All reflections cleared!');
-            }
-        });
-    }
-    
-    // Add sample reflections if none exist
-    if (!localStorage.getItem('reflections')) {
-        const sampleReflections = [
-            {
-                id: 1,
-                date: 'Mon, Jan 15, 2024, 09:30 AM',
-                thoughts: 'Feeling positive about my recovery journey today. Made progress with my exercises!',
-                mood: 'happy'
-            },
-            {
-                id: 2,
-                date: 'Sun, Jan 14, 2024, 07:45 PM',
-                thoughts: 'Challenging day but stayed committed to my goals. Tomorrow will be better.',
-                mood: 'neutral'
-            }
-        ];
-        localStorage.setItem('reflections', JSON.stringify(sampleReflections));
-        updateReflectionHistory();
-    }
-}
-
-// Update reflection history display
-function updateReflectionHistory() {
-    const historyContainer = document.getElementById('reflection-history');
-    if (!historyContainer) return;
-    
-    const reflections = JSON.parse(localStorage.getItem('reflections') || '[]');
-    
-    if (reflections.length === 0) {
-        historyContainer.innerHTML = `
-            <div class="empty-history">
-                <i class="fas fa-book-open"></i>
-                <p>No reflections yet. Write your first reflection above!</p>
-            </div>
-        `;
-        return;
-    }
-    
-    const moodEmojis = {
-        'happy': '😊',
-        'neutral': '😐',
-        'sad': '😔',
-        'anxious': '😰',
-        'energetic': '💪'
-    };
-    
-    historyContainer.innerHTML = reflections.map(reflection => `
-        <div class="reflection-item">
-            <div class="reflection-item-header">
-                <div class="reflection-date">${reflection.date}</div>
-                <div class="reflection-mood">${moodEmojis[reflection.mood] || '😐'}</div>
-            </div>
-            <div class="reflection-text">${reflection.thoughts}</div>
-            <button onclick="deleteReflection(${reflection.id})" class="delete-reflection" title="Delete reflection">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `).join('');
-}
-
-// Delete a single reflection
-function deleteReflection(id) {
-    if (!confirm('Delete this reflection?')) return;
-    
-    let reflections = JSON.parse(localStorage.getItem('reflections') || '[]');
-    reflections = reflections.filter(reflection => reflection.id !== id);
-    localStorage.setItem('reflections', JSON.stringify(reflections));
-    updateReflectionHistory();
-    showNotification('Reflection deleted!');
-}
-
-// Display medication reminders
-function displayReminders() {
-    const remindersContainer = document.getElementById('reminders-container');
-    if (!remindersContainer) return;
-    
-    const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-    
-    if (reminders.length === 0) {
-        remindersContainer.innerHTML = '<li>No reminders set</li>';
-        return;
-    }
-    
-    remindersContainer.innerHTML = reminders.slice(0, 5).map(reminder => `
-        <li>
-            <div>
-                <strong>${reminder.medicine}</strong>
-                <small>${reminder.time}</small>
-            </div>
-            <button onclick="deleteReminder(${reminder.id})" class="delete-btn">×</button>
-        </li>
-    `).join('');
-}
-
-// Delete a reminder
-function deleteReminder(id) {
-    let reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-    reminders = reminders.filter(reminder => reminder.id !== id);
-    localStorage.setItem('reminders', JSON.stringify(reminders));
-    displayReminders();
-    showNotification('Reminder deleted!');
-}
-
-// Update activity stats
-function updateStats() {
-    const activities = JSON.parse(localStorage.getItem('activities') || '[]');
-    const totalActivities = document.getElementById('total-activities');
-    const daysTracked = document.getElementById('days-tracked');
-    
-    if (totalActivities) {
-        totalActivities.textContent = activities.length;
-    }
-    
-    if (daysTracked) {
-        const uniqueDates = [...new Set(activities.map(a => a.date))];
-        daysTracked.textContent = uniqueDates.length;
-    }
-}
-
-// Initialize daily tips
-function initDailyTips() {
-    const dailyTips = [
-        "Start your day with positive affirmations and set realistic goals.",
-        "Take regular breaks to stretch and breathe deeply.",
-        "Practice gratitude by writing down three things you're thankful for.",
-        "Stay hydrated - drink at least 8 glasses of water daily.",
-        "Connect with supportive people in your life regularly.",
-        "Take short walks outside to refresh your mind.",
-        "Listen to calming music during breaks to reduce stress.",
-        "Celebrate small victories - every step forward counts!",
-        "Practice deep breathing for 5 minutes to calm your mind.",
-        "Set reminders to take your medications on time.",
-        "Maintain a consistent sleep schedule for better recovery.",
-        "Engage in light physical activity daily.",
-        "Keep a journal to track your progress and feelings.",
-        "Focus on what you can do today, not what you can't.",
-        "Be patient with yourself - recovery takes time."
-    ];
-    
-    const dailyTipElement = document.getElementById('daily-tip-text');
-    const newTipBtn = document.getElementById('new-tip-btn');
-    
-    function getRandomTip() {
-        return dailyTips[Math.floor(Math.random() * dailyTips.length)];
-    }
-    
-    if (dailyTipElement) {
-        dailyTipElement.textContent = getRandomTip();
-    }
-    
-    if (newTipBtn) {
-        newTipBtn.addEventListener('click', function() {
-            if (dailyTipElement) {
-                dailyTipElement.textContent = getRandomTip();
-            }
-        });
-    }
-}
-
-// Initialize theme toggle
-function initThemeToggle() {
-    const themeToggle = document.querySelector('.theme-toggle');
-    if (!themeToggle) return;
-    
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
-        const icon = themeToggle.querySelector('i');
-        if (document.body.classList.contains('dark-theme')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    });
-}
-
-// Initialize scroll to top button
-function initScrollToTop() {
-    const scrollTopBtn = document.getElementById('scroll-top');
-    if (!scrollTopBtn) return;
-    
-    scrollTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            scrollTopBtn.style.display = 'flex';
-        } else {
-            scrollTopBtn.style.display = 'none';
-        }
-    });
-}
-
-// Initialize chat button
-function initChatButton() {
     const chatBtn = document.getElementById('chat-btn');
     if (chatBtn) {
-        chatBtn.addEventListener('click', function() {
-            showNotification('Live chat coming soon! Support available via email and phone.');
-        });
+        chatBtn.removeEventListener('click', () => {});
+        chatBtn.style.display = 'none'; 
     }
 }
 
-// Show notification
-function showNotification(message) {
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notification-message');
-    
-    if (!notification || !notificationMessage) return;
-    
-    notificationMessage.textContent = message;
-    notification.classList.add('show');
-    
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
+function initializeAllForms() {
+    initializeReflectionForm();
+    initializeActivityForm();
+    initializeMedicationForm();
+    initializeGoalsForm();
+    initializeContactForm();
+    initializeSuccessStoryForm();
 }
-// Reflection Journal functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize mood selection
-    initializeMoodButtons();
-    
-    // Load saved data
-    loadReflections();
-    loadGoals();
-    loadActivities();
-    
-    // Reflection form submission
+
+function initializeReflectionForm() {
     const reflectionForm = document.getElementById('reflection-form');
-    if (reflectionForm) {
-        reflectionForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            saveReflection();
-        });
-    }
+    if (!reflectionForm) return;
     
-    // Clear reflection history
-    const clearHistoryBtn = document.getElementById('clear-reflection-history');
-    if (clearHistoryBtn) {
-        clearHistoryBtn.addEventListener('click', clearReflectionHistory);
-    }
+    let selectedMood = null;
     
-    // Goal form submission
-    const goalsForm = document.getElementById('goals-form');
-    if (goalsForm) {
-        goalsForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            saveGoal();
-        });
-    }
-    
-    // Activity form submission
-    const activityForm = document.getElementById('activity-form');
-    if (activityForm) {
-        activityForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            saveActivity();
-        });
-    }
-});
-
-function initializeMoodButtons() {
-    const moodButtons = document.querySelectorAll('.mood-btn');
-    const selectedMoodInput = document.getElementById('selected-mood');
-    
-    moodButtons.forEach(button => {
+    document.querySelectorAll('.mood-btn').forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            moodButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Set the hidden input value
-            selectedMoodInput.value = this.getAttribute('data-mood');
+            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedMood = this.dataset.mood;
+            document.getElementById('selected-mood').value = selectedMood;
         });
     });
-}
-
-function saveReflection() {
-    const thoughts = document.getElementById('thoughts').value.trim();
-    const mood = document.getElementById('selected-mood').value;
     
-    // Validate inputs
-    if (!thoughts) {
-        alert('Please enter your thoughts');
-        return;
-    }
-    
-    if (!mood) {
-        alert('Please select a mood');
-        return;
-    }
-    
-    // Create reflection object
-    const reflection = {
-        id: Date.now(),
-        date: new Date().toLocaleDateString('en-US', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        }),
-        text: thoughts,
-        mood: mood,
-        moodEmoji: getMoodEmoji(mood)
-    };
-    
-    // Get existing reflections from localStorage
-    let reflections = JSON.parse(localStorage.getItem('rehabGrowthReflections')) || [];
-    
-    // Add new reflection
-    reflections.unshift(reflection); // Add to beginning
-    
-    // Save to localStorage
-    localStorage.setItem('rehabGrowthReflections', JSON.stringify(reflections));
-    
-    // Update display
-    displayReflections();
-    
-    // Reset form
-    document.getElementById('reflection-form').reset();
-    document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('selected-mood').value = '';
-    
-    // Show success message
-    showNotification('Reflection saved successfully!');
-}
-
-function getMoodEmoji(mood) {
-    const emojis = {
-        'happy': '😊',
-        'neutral': '😐',
-        'sad': '😔',
-        'anxious': '😰',
-        'energetic': '💪'
-    };
-    return emojis[mood] || '😐';
-}
-
-function displayReflections() {
-    const historyContainer = document.getElementById('reflection-history');
-    let reflections = JSON.parse(localStorage.getItem('rehabGrowthReflections')) || [];
-    
-    if (reflections.length === 0) {
-        historyContainer.innerHTML = `
-            <div class="empty-history">
-                <i class="fas fa-book-open"></i>
-                <p>No reflections yet. Start by saving your first reflection above!</p>
-            </div>
-        `;
-        return;
-    }
-    
-    let html = '';
-    reflections.forEach(reflection => {
-        html += `
-            <div class="history-item" data-id="${reflection.id}">
-                <div class="reflection-date">${reflection.date}</div>
-                <div class="reflection-mood">${reflection.moodEmoji} ${reflection.mood.charAt(0).toUpperCase() + reflection.mood.slice(1)}</div>
-                <div class="reflection-text">${reflection.text}</div>
-            </div>
-        `;
-    });
-    
-    historyContainer.innerHTML = html;
-}
-
-function clearReflectionHistory() {
-    if (confirm('Are you sure you want to clear all your reflection history? This action cannot be undone.')) {
-        localStorage.removeItem('rehabGrowthReflections');
-        displayReflections();
-        showNotification('Reflection history cleared');
-    }
-}
-
-function loadReflections() {
-    displayReflections();
-}
-
-// Goal Setting functionality
-function saveGoal() {
-    const shortGoal = document.getElementById('short-goal').value.trim();
-    const longGoal = document.getElementById('long-goal').value.trim();
-    
-    // Validate inputs
-    if (!shortGoal && !longGoal) {
-        alert('Please enter at least one goal');
-        return;
-    }
-    
-    // Create goal object
-    const goal = {
-        id: Date.now(),
-        date: new Date().toLocaleDateString('en-US', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        }),
-        shortTerm: shortGoal,
-        longTerm: longGoal
-    };
-    
-    // Get existing goals from localStorage
-    let goals = JSON.parse(localStorage.getItem('rehabGrowthGoals')) || [];
-    
-    // Add new goal
-    goals.unshift(goal); // Add to beginning
-    
-    // Save to localStorage
-    localStorage.setItem('rehabGrowthGoals', JSON.stringify(goals));
-    
-    // Update display
-    displayGoals();
-    
-    // Reset form
-    document.getElementById('goals-form').reset();
-    
-    // Show success message
-    showNotification('Goals saved successfully!');
-}
-
-function displayGoals() {
-    const goalsList = document.getElementById('goals-list');
-    let goals = JSON.parse(localStorage.getItem('rehabGrowthGoals')) || [];
-    
-    if (goals.length === 0) {
-        goalsList.innerHTML = '<li>No goals set yet. Set your first goal above!</li>';
-        return;
-    }
-    
-    let html = '';
-    goals.forEach(goal => {
-        html += `
-            <li data-id="${goal.id}">
-                <div class="goal-item">
-                    ${goal.shortTerm ? `
-                        <div class="goal-type">Short-term Goal:</div>
-                        <div class="goal-text">${goal.shortTerm}</div>
-                    ` : ''}
-                    ${goal.longTerm ? `
-                        <div class="goal-type">Long-term Goal:</div>
-                        <div class="goal-text">${goal.longTerm}</div>
-                    ` : ''}
-                    <div class="goal-date">Set on: ${goal.date}</div>
-                </div>
-            </li>
-        `;
-    });
-    
-    goalsList.innerHTML = html;
-}
-
-function loadGoals() {
-    displayGoals();
-}
-
-// Activity Tracker functionality
-function saveActivity() {
-    const activityType = document.getElementById('activity-type').value;
-    const duration = document.getElementById('duration').value;
-    const notes = document.getElementById('activity-notes').value.trim();
-    
-    // Validate inputs
-    if (!activityType) {
-        alert('Please select an activity type');
-        return;
-    }
-    
-    if (!duration || duration < 1 || duration > 240) {
-        alert('Please enter a valid duration (1-240 minutes)');
-        return;
-    }
-    
-    // Create activity object
-    const activity = {
-        id: Date.now(),
-        date: new Date().toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        }),
-        type: activityType,
-        duration: duration,
-        notes: notes
-    };
-    
-    // Get existing activities from localStorage
-    let activities = JSON.parse(localStorage.getItem('rehabGrowthActivities')) || [];
-    
-    // Add new activity
-    activities.unshift(activity);
-    
-    // Save to localStorage
-    localStorage.setItem('rehabGrowthActivities', JSON.stringify(activities));
-    
-    // Update display and stats
-    updateActivityStats();
-    displayActivities();
-    
-    // Reset form
-    document.getElementById('activity-form').reset();
-    
-    // Show success message
-    showNotification('Activity logged successfully!');
-}
-
-function displayActivities() {
-    const activityList = document.getElementById('activity-history-list');
-    let activities = JSON.parse(localStorage.getItem('rehabGrowthActivities')) || [];
-    
-    if (activities.length === 0) {
-        activityList.innerHTML = '<li>No activities logged yet</li>';
-        return;
-    }
-    
-    // Show only last 5 activities
-    const recentActivities = activities.slice(0, 5);
-    
-    let html = '';
-    recentActivities.forEach(activity => {
-        html += `
-            <li>
-                <strong>${activity.type}</strong> - ${activity.duration} minutes
-                <br>
-                <small>${activity.date}${activity.notes ? ` - ${activity.notes}` : ''}</small>
-            </li>
-        `;
-    });
-    
-    activityList.innerHTML = html;
-}
-
-function updateActivityStats() {
-    const activities = JSON.parse(localStorage.getItem('rehabGrowthActivities')) || [];
-    const totalActivities = document.getElementById('total-activities');
-    const daysTracked = document.getElementById('days-tracked');
-    
-    // Calculate unique days
-    const uniqueDays = new Set(activities.map(activity => {
-        const date = new Date(activity.id);
-        return date.toDateString();
-    })).size;
-    
-    totalActivities.textContent = activities.length;
-    daysTracked.textContent = uniqueDays;
-}
-
-function loadActivities() {
-    updateActivityStats();
-    displayActivities();
-}
-
-// Utility function for notifications
-function showNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.innerHTML = `
-        <i class="fas fa-check-circle"></i>
-        <span>${message}</span>
-    `;
-    
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--success-color);
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        animation: slideIn 0.3s ease;
-    `;
-    
-    // Add keyframe animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+    reflectionForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const thoughts = document.getElementById('thoughts').value.trim();
+        const mood = selectedMood;
+        
+        if (!thoughts) {
+            showNotification('Please enter your thoughts', 'warning');
+            return;
         }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+        
+        if (!mood) {
+            showNotification('Please select your mood', 'warning');
+            return;
         }
-    `;
-    document.head.appendChild(style);
+        
+        const reflection = {
+            id: Date.now(),
+            date: new Date().toLocaleDateString('en-US', { 
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
+            thoughts: thoughts,
+            mood: mood,
+            moodEmoji: getMoodEmoji(mood)
+        };
+        
+        saveReflection(reflection);
+        updateReflectionHistory();
+        
+        reflectionForm.reset();
+        document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+        selectedMood = null;
+        
+        showNotification('Reflection saved successfully!', 'success');
+    });
     
-    document.body.appendChild(notification);
-    
-    // Remove notification after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'fadeOut 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
+    const clearBtn = document.getElementById('clear-reflection-history');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all your reflection history? This cannot be undone.')) {
+                localStorage.removeItem('rehabGrowthReflections');
+                updateReflectionHistory();
+                showNotification('Reflection history cleared', 'info');
             }
-            if (style.parentNode) {
-                style.parentNode.removeChild(style);
-            }
-        }, 300);
-    }, 3000);
+        });
+    }
 }
-// Chat functionality for About page
-document.addEventListener('DOMContentLoaded', function() {
-    // Chat functionality
-    const chatBtn = document.getElementById('chat-btn');
-    const chatWindow = document.getElementById('chat-window');
-    const chatClose = document.getElementById('chat-close');
-    const chatSend = document.getElementById('chat-send');
-    const chatInput = document.getElementById('chat-input');
-    const chatMessages = document.getElementById('chat-messages');
+
+function initializeActivityForm() {
+    const activityForm = document.getElementById('activity-form');
+    if (!activityForm) return;
     
-    // Notification functionality
-    const notification = document.getElementById('notification');
-    const notificationClose = document.getElementById('notification-close');
-    const notificationMessage = document.getElementById('notification-message');
+    activityForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const type = document.getElementById('activity-type').value;
+        const duration = document.getElementById('duration').value;
+        const notes = document.getElementById('activity-notes').value.trim();
+        
+        if (!type) {
+            showNotification('Please select an activity type', 'warning');
+            return;
+        }
+        
+        if (!duration || duration < 1 || duration > 240) {
+            showNotification('Please enter a valid duration (1-240 minutes)', 'warning');
+            return;
+        }
+        const activity = {
+            id: Date.now(),
+            date: new Date().toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
+            type: type,
+            duration: parseInt(duration),
+            notes: notes
+        };
+        
+        saveActivity(activity);
+        updateActivityStats();
+        displayActivities();
+        activityForm.reset();
+        
+        showNotification('Activity logged successfully!', 'success');
+    });
+}
+function initializeMedicationForm() {
+    const medicationForm = document.getElementById('medical-form');
+    if (!medicationForm) return;
     
-    // Success story form
+    medicationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const medicine = document.getElementById('medicine').value.trim();
+        const time = document.getElementById('medicine-time').value;
+        
+        if (!medicine || !time) {
+            showNotification('Please fill in all fields', 'warning');
+            return;
+        }
+        
+        const reminder = {
+            id: Date.now(),
+            medicine: medicine,
+            time: time,
+            date: new Date().toLocaleDateString(),
+            completed: false
+        };
+        
+        saveReminder(reminder);
+        displayReminders();
+        
+        medicationForm.reset();
+        
+        showNotification('Medication reminder added!', 'success');
+    });
+}
+function initializeGoalsForm() {
+    const goalsForm = document.getElementById('goals-form');
+    if (!goalsForm) return;
+    
+    const savedGoals = JSON.parse(localStorage.getItem('rehabGrowthGoals') || '{}');
+    if (savedGoals.short) {
+        document.getElementById('short-goal').value = savedGoals.short;
+    }
+    if (savedGoals.long) {
+        document.getElementById('long-goal').value = savedGoals.long;
+    }
+    
+    goalsForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const shortGoal = document.getElementById('short-goal').value.trim();
+        const longGoal = document.getElementById('long-goal').value.trim();
+        
+        const goals = {
+            short: shortGoal,
+            long: longGoal,
+            updated: new Date().toLocaleDateString()
+        };
+        
+        localStorage.setItem('rehabGrowthGoals', JSON.stringify(goals));
+        updateGoalsDisplay();
+        
+        showNotification('Goals updated successfully!', 'success');
+    });
+}
+
+function initializeContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
+    
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value.trim();
+        
+        if (!name || !email || !subject || !message) {
+            showNotification('Please fill in all required fields', 'warning');
+            return;
+        }
+        
+        if (!validateEmail(email)) {
+            showNotification('Please enter a valid email address', 'warning');
+            return;
+        }
+        showNotification('Message sent successfully! We\'ll respond within 24 hours.', 'success');
+        
+        contactForm.reset();
+    });
+}
+function initializeSuccessStoryForm() {
     const storyForm = document.getElementById('success-story-form');
-    const successMessage = document.getElementById('story-success');
-    
-    // Testimonial slider
-    const sliderPrev = document.querySelector('.slider-prev');
-    const sliderNext = document.querySelector('.slider-next');
-    const dots = document.querySelectorAll('.dot');
-    const testimonialCards = document.querySelectorAll('.testimonials-slider .testimonial-card');
-    let currentSlide = 0;
-    
-    // Star rating for story form
+    if (!storyForm) return;
     const stars = document.querySelectorAll('.stars i');
     const ratingInput = document.getElementById('story-rating');
     
-    // ========== CHAT FUNCTIONALITY ==========
-    if (chatBtn && chatWindow) {
-        chatBtn.addEventListener('click', function() {
-            chatWindow.style.display = 'flex';
-            chatInput.focus();
-        });
-        
-        chatClose.addEventListener('click', function() {
-            chatWindow.style.display = 'none';
-        });
-        
-        chatSend.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-        
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message) {
-                // Add user message
-                addMessage(message, 'user');
-                chatInput.value = '';
-                
-                // Simulate bot response after delay
-                setTimeout(() => {
-                    const responses = [
-                        "I understand. How can I assist you further with your rehabilitation journey?",
-                        "That's great to hear! Our team is here to support you every step of the way.",
-                        "Thank you for sharing. Would you like me to connect you with a specialist?",
-                        "I can help with medication reminders, progress tracking, or goal setting. What would you like to know more about?",
-                        "Your dedication to recovery is inspiring! Remember, progress takes time."
-                    ];
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    addMessage(randomResponse, 'bot');
-                }, 1000);
-            }
-        }
-        
-        function addMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${sender}-message`;
-            
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    <p>${text}</p>
-                </div>
-                <div class="message-time">${timeString}</div>
-            `;
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    }
-    
-    // ========== NOTIFICATION FUNCTIONALITY ==========
-    function showNotification(message) {
-        if (notification && notificationMessage) {
-            notificationMessage.textContent = message;
-            notification.style.display = 'block';
-            notification.classList.add('show');
-            
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                hideNotification();
-            }, 5000);
-        }
-    }
-    
-    function hideNotification() {
-        if (notification) {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 300);
-        }
-    }
-    
-    if (notificationClose) {
-        notificationClose.addEventListener('click', hideNotification);
-    }
-    
-    // ========== TESTIMONIAL SLIDER ==========
-    function updateSlider() {
-        testimonialCards.forEach((card, index) => {
-            card.classList.remove('active');
-            if (dots[index]) dots[index].classList.remove('active');
-        });
-        
-        testimonialCards[currentSlide].classList.add('active');
-        if (dots[currentSlide]) dots[currentSlide].classList.add('active');
-    }
-    
-    if (sliderNext) {
-        sliderNext.addEventListener('click', function() {
-            currentSlide = (currentSlide + 1) % testimonialCards.length;
-            updateSlider();
-        });
-    }
-    
-    if (sliderPrev) {
-        sliderPrev.addEventListener('click', function() {
-            currentSlide = (currentSlide - 1 + testimonialCards.length) % testimonialCards.length;
-            updateSlider();
-        });
-    }
-    
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            currentSlide = index;
-            updateSlider();
-        });
-    });
-    
-    // Auto slide every 5 seconds
-    setInterval(() => {
-        currentSlide = (currentSlide + 1) % testimonialCards.length;
-        updateSlider();
-    }, 5000);
-    
-    // ========== STAR RATING ==========
     stars.forEach(star => {
         star.addEventListener('click', function() {
-            const rating = parseInt(this.getAttribute('data-rating'));
+            const rating = this.dataset.rating;
             ratingInput.value = rating;
             
             stars.forEach((s, index) => {
@@ -1164,97 +348,649 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-        
         star.addEventListener('mouseover', function() {
-            const rating = parseInt(this.getAttribute('data-rating'));
+            const rating = this.dataset.rating;
             stars.forEach((s, index) => {
                 if (index < rating) {
-                    s.style.color = '#f6ad55';
-                } else {
-                    s.style.color = '';
+                    s.style.color = '#ffc107';
                 }
             });
         });
         
         star.addEventListener('mouseout', function() {
-            stars.forEach((s, index) => {
+            stars.forEach(s => {
                 if (!s.classList.contains('active')) {
                     s.style.color = '';
                 }
             });
         });
     });
-    
-    // ========== SUCCESS STORY FORM ==========
-    if (storyForm) {
-        storyForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Basic validation
-            const name = document.getElementById('story-name').value.trim();
-            const email = document.getElementById('story-email').value.trim();
-            const storyType = document.getElementById('story-type').value;
-            const rating = document.getElementById('story-rating').value;
-            const title = document.getElementById('story-title').value.trim();
-            const content = document.getElementById('story-content').value.trim();
-            const consent = document.getElementById('story-consent').checked;
-            
-            if (!name || !email || !storyType || rating === '0' || !title || !content || !consent) {
-                showNotification('Please fill in all required fields and select a rating.');
-                return;
-            }
-            
-            // In a real application, you would send this data to a server
-            // For demo purposes, we'll just show success
-            
-            // Hide form and show success message
-            storyForm.style.display = 'none';
-            successMessage.style.display = 'block';
-            
-            // Show notification
-            showNotification('Thank you for sharing your success story! Our team will review it and may contact you for more details.');
-            
-            // Reset form
-            storyForm.reset();
-            stars.forEach(star => {
-                star.classList.remove('fas', 'active');
-                star.classList.add('far');
-            });
-            ratingInput.value = '0';
-        });
-    }
-    
-    // ========== SCROLL TO TOP ==========
-    const scrollTopBtn = document.getElementById('scroll-top');
-    if (scrollTopBtn) {
-        scrollTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+    storyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.style.opacity = '1';
-                scrollTopBtn.style.visibility = 'visible';
-            } else {
-                scrollTopBtn.style.opacity = '0';
-                scrollTopBtn.style.visibility = 'hidden';
+        if (ratingInput.value === '0') {
+            showNotification('Please rate your experience', 'warning');
+            return;
+        }
+        
+        storyForm.style.display = 'none';
+        const successMessage = document.getElementById('story-success');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+        }
+        
+        showNotification('Thank you for sharing your story! We may contact you for more details.', 'success');
+    });
+}
+function initializeReflections() {
+    
+    if (!localStorage.getItem('rehabGrowthReflections')) {
+        const sampleReflections = [
+            {
+                id: 1,
+                date: 'Mon, Jan 15, 2024, 09:30 AM',
+                thoughts: 'Feeling positive about my recovery journey today. Made progress with my exercises!',
+                mood: 'happy',
+                moodEmoji: '😊'
+            },
+            {
+                id: 2,
+                date: 'Sun, Jan 14, 2024, 07:45 PM',
+                thoughts: 'Challenging day but stayed committed to my goals. Tomorrow will be better.',
+                mood: 'neutral',
+                moodEmoji: '😐'
             }
-        });
+        ];
+        localStorage.setItem('rehabGrowthReflections', JSON.stringify(sampleReflections));
     }
     
-    // Preloader
-    window.addEventListener('load', function() {
-        const preloader = document.querySelector('.preloader');
-        if (preloader) {
+    updateReflectionHistory();
+}
+
+function saveReflection(reflection) {
+    let reflections = JSON.parse(localStorage.getItem('rehabGrowthReflections') || '[]');
+    reflections.unshift(reflection); 
+    localStorage.setItem('rehabGrowthReflections', JSON.stringify(reflections));
+}
+function updateReflectionHistory() {
+    const historyContainer = document.getElementById('reflection-history');
+    if (!historyContainer) return;
+    
+    const reflections = JSON.parse(localStorage.getItem('rehabGrowthReflections') || '[]');
+    
+    if (reflections.length === 0) {
+        historyContainer.innerHTML = `
+            <div class="empty-history">
+                <i class="fas fa-book-open"></i>
+                <p>No reflections yet. Start by saving your first reflection above!</p>
+            </div>
+        `;
+        return;
+    }
+    const recentReflections = reflections.slice(0, 10);
+    
+    historyContainer.innerHTML = recentReflections.map(reflection => `
+        <div class="history-item" data-id="${reflection.id}">
+            <div class="reflection-header">
+                <div class="reflection-date">${reflection.date}</div>
+                <div class="reflection-mood">${reflection.moodEmoji} ${reflection.mood}</div>
+            </div>
+            <div class="reflection-text">${reflection.thoughts}</div>
+            <button onclick="deleteReflection(${reflection.id})" class="delete-btn" title="Delete">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `).join('');
+}
+
+function deleteReflection(id) {
+    if (!confirm('Are you sure you want to delete this reflection?')) return;
+    
+    let reflections = JSON.parse(localStorage.getItem('rehabGrowthReflections') || '[]');
+    reflections = reflections.filter(r => r.id !== id);
+    localStorage.setItem('rehabGrowthReflections', JSON.stringify(reflections));
+    updateReflectionHistory();
+    showNotification('Reflection deleted', 'info');
+}
+
+function getMoodEmoji(mood) {
+    const emojis = {
+        'happy': '😊',
+        'neutral': '😐',
+        'sad': '😔',
+        'anxious': '😰',
+        'energetic': '💪'
+    };
+    return emojis[mood] || '😐';
+}
+function initializeActivities() {
+    if (!localStorage.getItem('rehabGrowthActivities')) {
+        const sampleActivities = [
+            {
+                id: 1,
+                date: 'Jan 15, 9:00 AM',
+                type: 'Walking',
+                duration: 30,
+                notes: 'Morning walk in the park'
+            },
+            {
+                id: 2,
+                date: 'Jan 14, 3:00 PM',
+                type: 'Stretching',
+                duration: 20,
+                notes: 'Focused on back stretches'
+            }
+        ];
+        localStorage.setItem('rehabGrowthActivities', JSON.stringify(sampleActivities));
+    }
+    
+    updateActivityStats();
+    displayActivities();
+}
+
+function saveActivity(activity) {
+    let activities = JSON.parse(localStorage.getItem('rehabGrowthActivities') || '[]');
+    activities.unshift(activity);
+    localStorage.setItem('rehabGrowthActivities', JSON.stringify(activities));
+}
+
+function updateActivityStats() {
+    const activities = JSON.parse(localStorage.getItem('rehabGrowthActivities') || '[]');
+    
+    const totalActivities = document.getElementById('total-activities');
+    const daysTracked = document.getElementById('days-tracked');
+    
+    if (totalActivities) {
+        totalActivities.textContent = activities.length;
+    }
+    
+    if (daysTracked) {
+        const uniqueDays = new Set(activities.map(a => {
+            const date = new Date(a.id);
+            return date.toDateString();
+        })).size;
+        daysTracked.textContent = uniqueDays;
+    }
+}
+
+function displayActivities() {
+    const activityList = document.getElementById('activity-history-list');
+    if (!activityList) return;
+    
+    const activities = JSON.parse(localStorage.getItem('rehabGrowthActivities') || '[]');
+    
+    if (activities.length === 0) {
+        activityList.innerHTML = '<li>No activities logged yet</li>';
+        return;
+    }
+    const recentActivities = activities.slice(0, 5);
+    
+    activityList.innerHTML = recentActivities.map(activity => `
+        <li>
+            <div class="activity-item">
+                <div class="activity-header">
+                    <strong>${activity.type}</strong>
+                    <span class="activity-duration">${activity.duration} min</span>
+                </div>
+                <div class="activity-details">
+                    <small>${activity.date}</small>
+                    ${activity.notes ? `<p class="activity-notes">${activity.notes}</p>` : ''}
+                </div>
+            </div>
+        </li>
+    `).join('');
+}
+function initializeReminders() {
+    displayReminders();
+}
+
+function saveReminder(reminder) {
+    let reminders = JSON.parse(localStorage.getItem('rehabGrowthReminders') || '[]');
+    reminders.unshift(reminder);
+    localStorage.setItem('rehabGrowthReminders', JSON.stringify(reminders));
+}
+
+function displayReminders() {
+    const remindersContainer = document.getElementById('reminders-container');
+    if (!remindersContainer) return;
+    
+    const reminders = JSON.parse(localStorage.getItem('rehabGrowthReminders') || '[]');
+    
+    if (reminders.length === 0) {
+        remindersContainer.innerHTML = '<li class="no-reminders">No reminders set for today</li>';
+        return;
+    }
+    const today = new Date().toLocaleDateString();
+    const todayReminders = reminders.filter(r => r.date === today);
+    
+    if (todayReminders.length === 0) {
+        remindersContainer.innerHTML = '<li class="no-reminders">No reminders set for today</li>';
+        return;
+    }
+    
+    remindersContainer.innerHTML = todayReminders.map(reminder => `
+        <li data-id="${reminder.id}">
+            <div class="reminder-info">
+                <strong>${reminder.medicine}</strong>
+                <small>${reminder.time}</small>
+            </div>
+            <button onclick="toggleReminder(${reminder.id})" class="reminder-toggle ${reminder.completed ? 'completed' : ''}" title="${reminder.completed ? 'Mark as pending' : 'Mark as taken'}">
+                <i class="fas fa-${reminder.completed ? 'check-circle' : 'circle'}"></i>
+            </button>
+            <button onclick="deleteReminder(${reminder.id})" class="delete-btn" title="Delete">
+                ×
+            </button>
+        </li>
+    `).join('');
+}
+
+function toggleReminder(id) {
+    let reminders = JSON.parse(localStorage.getItem('rehabGrowthReminders') || '[]');
+    reminders = reminders.map(reminder => {
+        if (reminder.id === id) {
+            reminder.completed = !reminder.completed;
+        }
+        return reminder;
+    });
+    localStorage.setItem('rehabGrowthReminders', JSON.stringify(reminders));
+    displayReminders();
+    showNotification('Reminder updated', 'info');
+}
+
+function deleteReminder(id) {
+    if (!confirm('Delete this reminder?')) return;
+    
+    let reminders = JSON.parse(localStorage.getItem('rehabGrowthReminders') || '[]');
+    reminders = reminders.filter(r => r.id !== id);
+    localStorage.setItem('rehabGrowthReminders', JSON.stringify(reminders));
+    displayReminders();
+    showNotification('Reminder deleted', 'info');
+}
+function initializeGoals() {
+    if (!localStorage.getItem('rehabGrowthGoals')) {
+        const sampleGoals = {
+            short: 'Walk 30 minutes daily',
+            long: 'Reduce pain by 50% this month',
+            updated: new Date().toLocaleDateString()
+        };
+        localStorage.setItem('rehabGrowthGoals', JSON.stringify(sampleGoals));
+    }
+    
+    updateGoalsDisplay();
+    updateProgress();
+}
+
+function updateGoalsDisplay() {
+    const goalsList = document.getElementById('goals-list');
+    if (!goalsList) return;
+    
+    const goals = JSON.parse(localStorage.getItem('rehabGrowthGoals') || '{}');
+    
+    if (!goals.short && !goals.long) {
+        goalsList.innerHTML = '<li class="no-goals">No goals set yet. Set your first goal above!</li>';
+        return;
+    }
+    
+    let html = '';
+    if (goals.short) {
+        html += `
+            <li class="goal-item">
+                <div class="goal-type">Short-term Goal:</div>
+                <div class="goal-text">${goals.short}</div>
+            </li>
+        `;
+    }
+    if (goals.long) {
+        html += `
+            <li class="goal-item">
+                <div class="goal-type">Long-term Goal:</div>
+                <div class="goal-text">${goals.long}</div>
+            </li>
+        `;
+    }
+    
+    goalsList.innerHTML = html;
+}
+
+function updateProgress() {
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    
+    if (!progressFill || !progressText) return;
+    
+    const activities = JSON.parse(localStorage.getItem('rehabGrowthActivities') || '[]');
+    const completedCount = activities.length;
+    const targetCount = 7; 
+    
+    let progress = Math.min((completedCount / targetCount) * 100, 100);
+    if (isNaN(progress)) progress = 0;
+    
+    setTimeout(() => {
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}% of weekly goal completed`;
+        if (progress >= 100) {
+            progressFill.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
+        } else if (progress >= 50) {
+            progressFill.style.background = 'linear-gradient(135deg, #4299e1 0%, #3182ce 100%)';
+        } else {
+            progressFill.style.background = 'linear-gradient(135deg, #f56565 0%, #e53e3e 100%)';
+        }
+    }, 100);
+}
+function initializeTips() {
+    const tipButton = document.getElementById('new-tip-btn');
+    if (!tipButton) return;
+    const wellnessTips = [
+        {
+            text: "Start your day with 5 minutes of deep breathing to reduce stress and increase focus.",
+            author: "Dr. Sarah Johnson",
+            role: "Rehabilitation Specialist",
+            image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=100&q=80"
+        },
+        {
+            text: "Stay hydrated throughout the day. Drink at least 8 glasses of water to maintain energy levels.",
+            author: "Dr. Michael Chen",
+            role: "Nutrition Specialist",
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80"
+        },
+        {
+            text: "Take short breaks every hour to stretch and prevent muscle stiffness.",
+            author: "Emma Wilson",
+            role: "Physical Therapist",
+            image: "https://images.unsplash.com/photo-1494790108755-2616b786d4d9?auto=format&fit=crop&w=100&q=80"
+        },
+        {
+            text: "Practice gratitude by writing down 3 things you're thankful for each day.",
+            author: "Dr. Alex Rodriguez",
+            role: "Mental Health Counselor",
+            image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80"
+        },
+        {
+            text: "Get 7-8 hours of quality sleep each night for optimal recovery and mental clarity.",
+            author: "Dr. Lisa Wang",
+            role: "Sleep Specialist",
+            image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80"
+        }
+    ];
+    function getRandomTip() {
+        const currentTip = document.getElementById('daily-tip-text')?.textContent;
+        const availableTips = wellnessTips.filter(tip => tip.text !== currentTip);
+        return availableTips[Math.floor(Math.random() * availableTips.length)] || wellnessTips[0];
+    }
+    
+    tipButton.addEventListener('click', function() {
+        const tip = getRandomTip();
+        const tipText = document.getElementById('daily-tip-text');
+        const tipAuthor = document.getElementById('tip-author-name');
+        const tipRole = document.getElementById('tip-author-role');
+        const tipImage = document.querySelector('.tip-author img');
+        
+        if (tipText) {
+            tipText.style.opacity = '0';
             setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 500);
-            }, 1000);
+                tipText.textContent = tip.text;
+                tipText.style.opacity = '1';
+            }, 300);
+        }
+        
+        if (tipAuthor) tipAuthor.textContent = tip.author;
+        if (tipRole) tipRole.textContent = tip.role;
+        if (tipImage) {
+            tipImage.style.opacity = '0';
+            setTimeout(() => {
+                tipImage.src = tip.image;
+                tipImage.style.opacity = '1';
+            }, 300);
+        }
+        
+        showNotification('New wellness tip loaded!', 'info');
+    });
+    const initialTip = getRandomTip();
+    document.getElementById('daily-tip-text').textContent = initialTip.text;
+    document.getElementById('tip-author-name').textContent = initialTip.author;
+    document.getElementById('tip-author-role').textContent = initialTip.role;
+    document.querySelector('.tip-author img').src = initialTip.image;
+}
+function initializeTestimonialSlider() {
+    const testimonialsSlider = document.querySelector('.testimonials-slider');
+    if (!testimonialsSlider) return;
+    
+    const testimonialCards = document.querySelectorAll('.testimonials-slider .testimonial-card');
+    const sliderPrev = document.querySelector('.slider-prev');
+    const sliderNext = document.querySelector('.slider-next');
+    const sliderDots = document.querySelectorAll('.dot');
+    
+    if (testimonialCards.length === 0) return;
+    
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        testimonialCards.forEach(card => {
+            card.classList.remove('active');
+        });
+        sliderDots.forEach(dot => {
+            dot.classList.remove('active');
+        });
+        testimonialCards[index].classList.add('active');
+        sliderDots[index].classList.add('active');
+        currentSlide = index;
+    }
+    if (sliderPrev) {
+        sliderPrev.addEventListener('click', function() {
+            let newIndex = currentSlide - 1;
+            if (newIndex < 0) newIndex = testimonialCards.length - 1;
+            showSlide(newIndex);
+        });
+    }
+    if (sliderNext) {
+        sliderNext.addEventListener('click', function() {
+            let newIndex = currentSlide + 1;
+            if (newIndex >= testimonialCards.length) newIndex = 0;
+            showSlide(newIndex);
+        });
+    }
+    sliderDots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+            showSlide(index);
+        });
+    });
+    let slideInterval = setInterval(() => {
+        let newIndex = currentSlide + 1;
+        if (newIndex >= testimonialCards.length) newIndex = 0;
+        showSlide(newIndex);
+    }, 5000);
+    testimonialsSlider.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+    
+    testimonialsSlider.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(() => {
+            let newIndex = currentSlide + 1;
+            if (newIndex >= testimonialCards.length) newIndex = 0;
+            showSlide(newIndex);
+        }, 5000);
+    });
+    showSlide(0);
+}
+
+function initializeFAQs() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            const icon = this.querySelector('i');
+            
+            if (this.classList.contains('active')) {
+                this.classList.remove('active');
+                answer.classList.remove('active');
+                if (icon) {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            } else {
+                faqQuestions.forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                    const qIcon = q.querySelector('i');
+                    if (qIcon) {
+                        qIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+                this.classList.add('active');
+                answer.classList.add('active');
+                if (icon) {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            }
+        });
+    });
+}
+function initializeScrollToTop() {
+    const scrollTopBtn = document.getElementById('scroll-top');
+    if (!scrollTopBtn) return;
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollTopBtn.style.display = 'flex';
+        } else {
+            scrollTopBtn.style.display = 'none';
         }
     });
+    scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+function initializeNotifications() {
+    const notificationClose = document.getElementById('notification-close');
+    if (notificationClose) {
+        notificationClose.addEventListener('click', function() {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+}
+function showNotification(message, type = 'info') {
+    let notification = document.getElementById('notification');
+    
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'notification';
+        document.body.appendChild(notification);
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            max-width: 350px;
+            border-left: 4px solid var(--primary);
+        `;
+        
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-info-circle"></i>
+                <div class="notification-text">
+                    <p>${message}</p>
+                </div>
+                <button class="notification-close" id="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        const newCloseBtn = notification.querySelector('#notification-close');
+        if (newCloseBtn) {
+            newCloseBtn.addEventListener('click', function() {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 300);
+            });
+        }
+    }
+    const icon = notification.querySelector('i');
+    if (icon) {
+        if (type === 'success') {
+            icon.className = 'fas fa-check-circle';
+            notification.style.borderLeftColor = '#48bb78';
+            icon.style.color = '#48bb78';
+        } else if (type === 'warning') {
+            icon.className = 'fas fa-exclamation-triangle';
+            notification.style.borderLeftColor = '#ed8936';
+            icon.style.color = '#ed8936';
+        } else if (type === 'error') {
+            icon.className = 'fas fa-exclamation-circle';
+            notification.style.borderLeftColor = '#f56565';
+            icon.style.color = '#f56565';
+        } else {
+            icon.className = 'fas fa-info-circle';
+            notification.style.borderLeftColor = 'var(--primary)';
+            icon.style.color = 'var(--primary)';
+        }
+    }
+    const messageElement = notification.querySelector('.notification-text p');
+    if (messageElement) {
+        messageElement.textContent = message;
+    }
+    notification.style.display = 'flex';
+    notification.classList.remove('show');
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 300);
+    }, 5000);
+}
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function formatDate(date) {
+    return new Date(date).toLocaleDateString('en-US', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+setInterval(() => {
+    updateActivityStats();
+    updateProgress();
+}, 30000);
+setInterval(() => {
+    displayReminders();
+}, 60000);
+window.addEventListener('beforeunload', function() {
+    const thoughts = document.getElementById('thoughts');
+    if (thoughts && thoughts.value.trim()) {
+        localStorage.setItem('rehabGrowthDraft', thoughts.value);
+    }
+});
+window.addEventListener('load', function() {
+    const draft = localStorage.getItem('rehabGrowthDraft');
+    if (draft) {
+        const thoughts = document.getElementById('thoughts');
+        if (thoughts) {
+            thoughts.value = draft;
+        }
+    }
 });
